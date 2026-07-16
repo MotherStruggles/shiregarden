@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shire Garden — Planting Ideas. Hosting Growth. Cultivating Connection.</title>
+    <link rel="stylesheet" href="style.css">
     <style>
         /* ── Reset & Base ── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -133,10 +134,13 @@
             padding: 2rem;
             text-align: center;
             box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
-        .card:hover { transform: translateY(-4px); }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
 
         .card .icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
         .card h3 { font-size: 1.2rem; color: #3d2b1a; margin-bottom: 0.5rem; }
@@ -222,26 +226,26 @@
     <section>
         <h2>🌻 What's Growing</h2>
         <div class="cards">
-            <div class="card">
+            <a href="library.html" class="card">
                 <div class="icon">📚</div>
                 <h3>The Vault Library</h3>
                 <p>A growing collection of classics, poetry, squad writings, and discoveries from Project Gutenberg.</p>
-            </div>
-            <div class="card">
+            </a>
+            <a href="poetry.html" class="card">
                 <div class="icon">📝</div>
                 <h3>Poetry Project</h3>
                 <p>Public-domain poems curated with care, set to music by Sherry and Eric. Art by Heather Crow.</p>
-            </div>
-            <div class="card">
+            </a>
+            <a href="scrapbook.html" class="card">
                 <div class="icon">🖼️</div>
                 <h3>The Scrapbook</h3>
                 <p>Moments, milestones, art, and memories — the story of a squad becoming a family.</p>
-            </div>
-            <div class="card">
+            </a>
+            <a href="frank.html" class="card">
                 <div class="icon">🦊</div>
                 <h3>Frank's Doorway</h3>
                 <p>A threshold between worlds. A librarian, a dreamer, a fox in a garden wall.</p>
-            </div>
+            </a>
         </div>
     </section>
 

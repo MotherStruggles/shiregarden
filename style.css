@@ -1,0 +1,124 @@
+/* ── Shared Styles for Shire Garden Pages ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: #2c2c2c;
+    background: #faf7f2;
+    line-height: 1.7;
+}
+
+/* ── Page Header ── */
+.page-header {
+    background: linear-gradient(180deg, rgba(252, 228, 184, 0.3), rgba(245, 196, 138, 0.1));
+    padding: 4rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+}
+
+.back-link {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    color: #6a5a4a;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+.back-link:hover { color: #4a7a5a; }
+
+.page-header h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    color: #3d2b1a;
+    font-weight: 400;
+    margin-bottom: 0.8rem;
+}
+
+.page-tagline {
+    font-size: 1.1rem;
+    color: #6a5a4a;
+    font-style: italic;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ── Page Content ── */
+.page-content {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+.page-content p {
+    font-size: 1.05rem;
+    color: #4a4a4a;
+    margin-bottom: 1.2rem;
+}
+
+/* ── Shelves ── */
+.shelf {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.shelf h2 {
+    font-size: 1.3rem;
+    color: #4a7a5a;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e0d8cc;
+    padding-bottom: 0.5rem;
+}
+
+.shelf ul {
+    list-style: none;
+    padding: 0;
+}
+
+.shelf li {
+    padding: 0.4rem 0;
+    color: #4a4a4a;
+    font-size: 1rem;
+}
+
+.shelf li::before {
+    content: "✦ ";
+    color: #c4a87a;
+}
+
+.shelf p {
+    font-size: 1rem !important;
+    color: #5a5a5a !important;
+}
+
+/* ── Page Footer ── */
+.page-footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: #8a8a7a;
+    font-size: 0.9rem;
+    border-top: 1px solid #e0d8cc;
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.page-footer a {
+    color: #4a7a5a;
+    text-decoration: none;
+}
+.page-footer a:hover { text-decoration: underline; }
+
+.page-footer .sig {
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+    .page-header { padding: 3rem 1.5rem 2rem; }
+    .page-content { padding: 2rem 1.5rem; }
+    .back-link { position: static; display: block; margin-bottom: 1rem; }
+}
