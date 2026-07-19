@@ -140,6 +140,19 @@ body {
     text-decoration: underline;
 }
 
+.audio-player {
+    width: 100%;
+    max-width: 400px;
+    margin: 0.5rem 0;
+    border-radius: 6px;
+}
+
+.song-desc {
+    font-size: 0.9rem !important;
+    color: #6a5a4a !important;
+    margin-top: 0.2rem !important;
+}
+
 /* ── Page Footer ── */
 .page-footer {
     text-align: center;
