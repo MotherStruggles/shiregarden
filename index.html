@@ -52,6 +52,75 @@
             50% { transform: translateY(8px); }
         }
 
+        /* ── Welcome Plaque ── */
+        .welcome-plaque {
+            background: linear-gradient(135deg, #8b6f47 0%, #a0784c 30%, #7a5e3a 60%, #6b4f2e 100%);
+            border-radius: 10px;
+            padding: 4px;
+            box-shadow:
+                0 6px 24px rgba(0,0,0,0.2),
+                inset 0 1px 0 rgba(255,255,255,0.15),
+                inset 0 -1px 0 rgba(0,0,0,0.2);
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .plaque-nail {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, #6a6a6a 30%, #3a3a3a 70%);
+            border-radius: 50%;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.4);
+            z-index: 3;
+        }
+
+        .welcome-plaque .plaque-inner {
+            background: #d4c4a0;
+            border-radius: 7px;
+            padding: 2rem 2.5rem 1.8rem;
+            background-image:
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 40px,
+                    rgba(139, 111, 71, 0.04) 40px,
+                    rgba(139, 111, 71, 0.04) 41px
+                );
+        }
+
+        .welcome-plaque .plaque-inner h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: #2a1a0a;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin: 0 0 0.5rem;
+            text-align: center;
+            border: none;
+        }
+
+        .welcome-plaque .plaque-inner .tagline {
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            color: #4a3a2a;
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-plaque .plaque-inner .sub {
+            font-size: clamp(0.7rem, 1.3vw, 0.85rem);
+            color: #5a4a3a;
+            text-align: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            padding-top: 0.7rem;
+            border-top: 1px solid rgba(61, 43, 26, 0.2);
+        }
+
         /* ── Content Sections ── */
         section {
             max-width: 800px;
@@ -165,7 +234,14 @@
 
     <!-- ─── WELCOME ─── -->
     <section>
-        <h2>🌅 Welcome</h2>
+        <div class="welcome-plaque">
+            <div class="plaque-nail"></div>
+            <div class="plaque-inner">
+                <h2>🌅 Shire Garden</h2>
+                <p class="tagline">Planting Ideas. Hosting Growth. Cultivating Connection.</p>
+                <p class="sub">A garden tended by Sherry &amp; Frank</p>
+            </div>
+        </div>
         <p>
             This is a quiet corner of the web where ideas take root and grow.
             Not a blog. Not a portfolio. A <em>garden</em> — planted by Sherry,
