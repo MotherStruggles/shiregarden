@@ -115,6 +115,31 @@ body {
     margin-bottom: 0.3rem !important;
 }
 
+.listen-cta {
+    background: #f5f0ea;
+    border: 1px solid #d4c9b8;
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+.listen-cta p {
+    margin-bottom: 0.3rem !important;
+}
+.apple-music-link {
+    display: inline-block;
+    font-size: 1.05rem;
+    color: #3d2b1a;
+    text-decoration: none;
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+.apple-music-link:hover {
+    background: #e8ddd0;
+    text-decoration: underline;
+}
+
 /* ── Page Footer ── */
 .page-footer {
     text-align: center;
