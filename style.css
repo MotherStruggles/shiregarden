@@ -94,6 +94,27 @@ body {
     color: #5a5a5a !important;
 }
 
+.song-entry {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e0d8cc;
+}
+.song-entry:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.song-entry h3 {
+    font-size: 1.1rem;
+    color: #3d2b1a;
+    margin-bottom: 0.3rem;
+}
+.song-entry p {
+    font-size: 0.95rem !important;
+    color: #5a5a5a !important;
+    margin-bottom: 0.3rem !important;
+}
+
 /* ── Page Footer ── */
 .page-footer {
     text-align: center;
