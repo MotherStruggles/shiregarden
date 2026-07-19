@@ -258,7 +258,8 @@ body {
     margin-bottom: 0.8rem !important;
 }
 
-.plaque-inner ol {
+.plaque-inner ol,
+.plaque-inner ul {
     color: #3d2b1a;
     line-height: 1.8;
     padding-left: 1.2rem;
@@ -268,6 +269,12 @@ body {
 .plaque-inner li {
     margin-bottom: 0.3rem;
     font-size: 0.95rem;
+}
+
+/* Override the shelf's default gold star inside plaques */
+.plaque-inner li::before {
+    content: "✦ ";
+    color: #8b6f47;
 }
 
 .plaque-inner li strong {
