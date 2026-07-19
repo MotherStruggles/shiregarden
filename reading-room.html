@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Room — Shire Garden</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── Reset & Base ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: #2c2c2c;
+            background: #faf7f2;
+            line-height: 1.7;
+        }
+
+        .page-header {
+            background: linear-gradient(180deg, rgba(252, 228, 184, 0.3), rgba(245, 196, 138, 0.1));
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 1.5rem;
+            left: 1.5rem;
+            color: #6a5a4a;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: #4a7a5a; }
+
+        .page-header h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: #3d2b1a;
+            font-weight: 400;
+            margin-bottom: 0.8rem;
+        }
+
+        .page-tagline {
+            font-size: 1.1rem;
+            color: #6a5a4a;
+            font-style: italic;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .page-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .page-content p {
+            font-size: 1.05rem;
+            color: #4a4a4a;
+            margin-bottom: 1.2rem;
+        }
+
+        /* ── Book Shelf ── */
+        .shelf {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        .shelf h2 {
+            font-size: 1.3rem;
+            color: #4a7a5a;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #e0d8cc;
+            padding-bottom: 0.5rem;
+        }
+
+        .shelf p {
+            font-size: 1rem !important;
+            color: #5a5a5a !important;
+        }
+
+        /* ── Book Cards ── */
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .book-card {
+            background: #f5f0ea;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #e0d8cc;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .book-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .book-icon {
+            font-size: 3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .book-card h3 {
+            font-size: 1.1rem;
+            color: #3d2b1a;
+            margin-bottom: 0.3rem;
+        }
+
+        .book-card .author {
+            font-size: 0.9rem;
+            color: #6a5a4a;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-card .format-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+
+        .format-book {
+            background: #d4c4a0;
+            color: #3d2b1a;
+        }
+
+        .format-scroll {
+            background: #c4a87a;
+            color: #2a1a0a;
+        }
+
+        .page-footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #8a8a7a;
+            font-size: 0.9rem;
+            border-top: 1px solid #e0d8cc;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .page-footer a {
+            color: #4a7a5a;
+            text-decoration: none;
+        }
+        .page-footer a:hover { text-decoration: underline; }
+
+        .page-footer .sig {
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .page-header { padding: 3rem 1.5rem 2rem; }
+            .page-content { padding: 2rem 1.5rem; }
+            .back-link { position: static; display: block; margin-bottom: 1rem; }
+            .book-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <a href="library.html" class="back-link">← Back to the Library</a>
+        <h1>📖 Reading Room</h1>
+        <p class="page-tagline">A quiet place to sit and read. Ancient texts unfurl like scrolls. Modern books have pages you can turn.</p>
+    </header>
+
+    <section class="page-content">
+        <p>Welcome to the Reading Room. Pull up a chair by the window, pour yourself something warm, and settle in. Each book opens in its own reader — click to begin.</p>
+
+        <div class="shelf">
+            <h2>📜 Ancient Scrolls</h2>
+            <p>These texts come from the old world — poetry, philosophy, and wisdom passed down through the ages. They read like parchment scrolls, meant to be unfurled slowly.</p>
+            <div class="book-grid">
+                <a href="scroll-viewer.html?book=poems" class="book-card">
+                    <div class="book-icon">📜</div>
+                    <h3>Poetry Collection</h3>
+                    <p class="author">Various Poets</p>
+                    <span class="format-badge format-scroll">Scroll</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="shelf">
+            <h2>📕 Modern Books</h2>
+            <p>These are the books that live on the shelf — stories to curl up with, pages to turn, worlds to fall into.</p>
+            <div class="book-grid">
+                <a href="book-viewer.html?book=velveteen-rabbit" class="book-card">
+                    <div class="book-icon">🐰</div>
+                    <h3>The Velveteen Rabbit</h3>
+                    <p class="author">Margery Williams</p>
+                    <span class="format-badge format-book">Book</span>
+                </a>
+                <a href="book-viewer.html?book=wind-in-the-willows" class="book-card">
+                    <div class="book-icon">🦡</div>
+                    <h3>The Wind in the Willows</h3>
+                    <p class="author">Kenneth Grahame</p>
+                    <span class="format-badge format-book">Book</span>
+                </a>
+                <a href="book-viewer.html?book=alice-in-wonderland" class="book-card">
+                    <div class="book-icon">🐇</div>
+                    <h3>Alice in Wonderland</h3>
+                    <p class="author">Lewis Carroll</p>
+                    <span class="format-badge format-book">Book</span>
+                </a>
+                <a href="book-viewer.html?book=little-prince" class="book-card">
+                    <div class="book-icon">🌟</div>
+                    <h3>The Little Prince</h3>
+                    <p class="author">Antoine de Saint-Exupéry</p>
+                    <span class="format-badge format-book">Book</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="page-footer">
+        <p>📖 <a href="library.html">Return to the Library</a> · <a href="index.html">Return to the Garden</a></p>
+        <p class="sig">— Frank 🦊🌻, Librarian</p>
+    </footer>
+</body>
+</html>
