@@ -153,6 +153,41 @@ body {
     margin-top: 0.2rem !important;
 }
 
+.with-cover {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e0d8cc;
+}
+.with-cover:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.cover-thumb {
+    flex-shrink: 0;
+    width: 120px;
+}
+.cover-thumb img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    transition: transform 0.2s;
+}
+.cover-thumb img:hover {
+    transform: scale(1.05);
+}
+.song-info {
+    flex: 1;
+    min-width: 0;
+}
+.song-info h3 {
+    margin-top: 0;
+}
+
 /* ── Page Footer ── */
 .page-footer {
     text-align: center;
