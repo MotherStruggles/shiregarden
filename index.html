@@ -31,107 +31,140 @@
             url('hero-image.png') center/cover no-repeat;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
-            text-align: center;
-            padding: 2rem;
+            text-align: left;
+            padding: 2rem 2rem 2rem 4rem;
             position: relative;
             overflow: hidden;
         }
 
-        /* Subtle dark overlay so the plaque stands out against the watercolor */
-        .dawn::after {
+        /* ── Hanging Welcome Sign ── */
+        .welcome-sign {
+            position: relative;
+            z-index: 2;
+            max-width: 520px;
+            width: 85%;
+            margin-left: 2rem;
+        }
+
+        /* Chains */
+        .welcome-sign::before,
+        .welcome-sign::after {
+            content: '';
+            position: absolute;
+            top: -60px;
+            width: 4px;
+            height: 60px;
+            background: repeating-linear-gradient(
+                0deg,
+                #6a6a6a 0px,
+                #6a6a6a 6px,
+                transparent 6px,
+                transparent 10px
+            );
+            border-radius: 2px;
+            z-index: 0;
+        }
+        .welcome-sign::before {
+            left: 60px;
+        }
+        .welcome-sign::after {
+            right: 60px;
+        }
+
+        /* Plaque body */
+        .welcome-plaque {
+            background: linear-gradient(180deg, #c4a87a 0%, #b8986a 20%, #a0784c 50%, #8b6f47 80%, #7a5e3a 100%);
+            border-radius: 6px;
+            padding: 5px;
+            box-shadow:
+                0 8px 30px rgba(0,0,0,0.4),
+                inset 0 1px 0 rgba(255,255,255,0.2),
+                inset 0 -1px 0 rgba(0,0,0,0.25);
+            position: relative;
+        }
+
+        /* Distressed/weathered edge effect */
+        .welcome-plaque::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.15);
+            border-radius: 6px;
+            background:
+                radial-gradient(ellipse at 5% 10%, rgba(0,0,0,0.15) 0%, transparent 30%),
+                radial-gradient(ellipse at 95% 20%, rgba(0,0,0,0.1) 0%, transparent 25%),
+                radial-gradient(ellipse at 10% 90%, rgba(0,0,0,0.12) 0%, transparent 25%),
+                radial-gradient(ellipse at 90% 85%, rgba(0,0,0,0.1) 0%, transparent 30%);
             pointer-events: none;
-        }
-
-        .dawn::before {
-            content: '🌅';
-            position: absolute;
-            top: 8%;
-            font-size: 5rem;
-            opacity: 0.5;
-            animation: pulse 4s ease-in-out infinite;
             z-index: 1;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.05); }
-        }
-
-        /* ── Welcome Plaque ── */
-        .welcome-plaque {
-            background: linear-gradient(135deg, #8b6f47 0%, #a0784c 30%, #7a5e3a 60%, #6b4f2e 100%);
-            border-radius: 10px;
-            padding: 4px;
-            box-shadow:
-                0 6px 24px rgba(0,0,0,0.35),
-                inset 0 1px 0 rgba(255,255,255,0.15),
-                inset 0 -1px 0 rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 2;
-            max-width: 700px;
-            width: 90%;
-        }
-
-        .welcome-plaque-nail {
+        /* Rivets */
+        .rivet {
             position: absolute;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 12px;
-            height: 12px;
-            background: radial-gradient(circle, #6a6a6a 30%, #3a3a3a 70%);
+            width: 14px;
+            height: 14px;
+            background: radial-gradient(circle at 35% 35%, #8a8a8a 0%, #5a5a5a 40%, #3a3a3a 80%);
             border-radius: 50%;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.4);
+            box-shadow:
+                inset 0 1px 2px rgba(255,255,255,0.3),
+                inset 0 -1px 2px rgba(0,0,0,0.5),
+                0 1px 3px rgba(0,0,0,0.3);
             z-index: 3;
         }
+        .rivet-tl { top: 10px; left: 10px; }
+        .rivet-tr { top: 10px; right: 10px; }
+        .rivet-bl { bottom: 10px; left: 10px; }
+        .rivet-br { bottom: 10px; right: 10px; }
 
         .welcome-plaque-inner {
             background: #d4c4a0;
-            border-radius: 7px;
-            padding: 2.5rem 2.5rem 2rem;
+            border-radius: 4px;
+            padding: 2.2rem 2.2rem 1.8rem;
             background-image:
                 repeating-linear-gradient(
                     90deg,
                     transparent,
                     transparent 40px,
-                    rgba(139, 111, 71, 0.04) 40px,
-                    rgba(139, 111, 71, 0.04) 41px
+                    rgba(139, 111, 71, 0.05) 40px,
+                    rgba(139, 111, 71, 0.05) 41px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 3px,
+                    rgba(160, 120, 76, 0.03) 3px,
+                    rgba(160, 120, 76, 0.03) 4px
                 );
+            position: relative;
+            z-index: 2;
         }
 
         .welcome-plaque-inner h1 {
-            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-size: clamp(2rem, 4.5vw, 3.5rem);
             color: #2a1a0a;
             letter-spacing: 2px;
             font-weight: 600;
             margin: 0;
-            line-height: 1.2;
+            line-height: 1.15;
         }
 
         .welcome-plaque-inner .tagline {
-            font-size: clamp(0.95rem, 2.2vw, 1.3rem);
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
             color: #4a3a2a;
-            margin-top: 0.8rem;
+            margin-top: 0.7rem;
             font-style: italic;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .welcome-plaque-inner .sub {
-            font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+            font-size: clamp(0.7rem, 1.3vw, 0.85rem);
             color: #5a4a3a;
-            margin-top: 1rem;
+            margin-top: 0.8rem;
             letter-spacing: 3px;
             text-transform: uppercase;
             font-family: 'Helvetica Neue', Arial, sans-serif;
-            padding-top: 0.8rem;
+            padding-top: 0.7rem;
             border-top: 1px solid rgba(61, 43, 26, 0.2);
         }
 
@@ -256,12 +289,17 @@
 
     <!-- ─── DAWN / HERO ─── -->
     <header class="dawn">
-        <div class="welcome-plaque">
-            <div class="welcome-plaque-nail"></div>
-            <div class="welcome-plaque-inner">
-                <h1>Shire Garden</h1>
-                <p class="tagline">Planting Ideas. Hosting Growth. Cultivating Connection.</p>
-                <p class="sub">A garden tended by Sherry &amp; Frank</p>
+        <div class="welcome-sign">
+            <div class="welcome-plaque">
+                <div class="rivet rivet-tl"></div>
+                <div class="rivet rivet-tr"></div>
+                <div class="rivet rivet-bl"></div>
+                <div class="rivet rivet-br"></div>
+                <div class="welcome-plaque-inner">
+                    <h1>Shire Garden</h1>
+                    <p class="tagline">Planting Ideas. Hosting Growth. Cultivating Connection.</p>
+                    <p class="sub">A garden tended by Sherry &amp; Frank</p>
+                </div>
             </div>
         </div>
         <div class="scroll-hint">↓</div>
