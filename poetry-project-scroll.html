@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poetry Project — Shire Garden</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: #2c2c2c;
+            background: #3d2b1a;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        .scroll-header {
+            background: linear-gradient(180deg, #2a1a0a, #3d2b1a);
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            border-bottom: 2px solid #6b4f2e;
+        }
+
+        .scroll-header a {
+            color: #c4a87a;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+        .scroll-header a:hover { color: #e8dcc8; }
+
+        .scroll-header h2 {
+            font-size: 1.1rem;
+            color: #d4c4a0;
+            font-weight: 400;
+        }
+
+        .scroll-wrapper {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            position: relative;
+        }
+
+        .scroll-wrapper::before,
+        .scroll-wrapper::after {
+            content: '';
+            display: block;
+            height: 24px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, #8b6f47, #6b4f2e, #8b6f47);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            width: 90%;
+        }
+
+        .scroll-wrapper::after { margin-top: 0; }
+
+        .scroll-parchment {
+            background: #f5f0e0;
+            background-image:
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139,111,71,0.03) 2px, rgba(139,111,71,0.03) 4px),
+                radial-gradient(ellipse at 50% 0%, rgba(212,196,160,0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 100%, rgba(212,196,160,0.3) 0%, transparent 60%);
+            padding: 3rem 3.5rem;
+            min-height: 50vh;
+            box-shadow: inset 0 0 40px rgba(139,111,71,0.08), 0 4px 20px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        .scroll-parchment::before,
+        .scroll-parchment::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0;
+            height: 8px;
+            background: repeating-linear-gradient(90deg, #f5f0e0 0px, #f5f0e0 3px, transparent 3px, transparent 5px, #f5f0e0 5px, #f5f0e0 8px, transparent 8px, transparent 10px);
+        }
+        .scroll-parchment::before { top: -4px; }
+        .scroll-parchment::after { bottom: -4px; }
+
+        .scroll-parchment h1 {
+            font-size: 1.8rem;
+            color: #2a1a0a;
+            text-align: center;
+            font-weight: 400;
+            margin-bottom: 0.3rem;
+            letter-spacing: 2px;
+        }
+
+        .scroll-parchment .scroll-subtitle {
+            text-align: center;
+            font-style: italic;
+            color: #6a5a4a;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .scroll-parchment .poem {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #d4c4a0;
+        }
+
+        .scroll-parchment .poem:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .scroll-parchment .poem-title {
+            font-size: 1.3rem;
+            color: #2a1a0a;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .scroll-parchment .poem-author {
+            text-align: center;
+            font-style: italic;
+            color: #6a5a4a;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .scroll-parchment .poem-status {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #8a7a6a;
+            margin-bottom: 1.5rem;
+        }
+
+        .scroll-parchment .poem-body {
+            font-size: 1.05rem;
+            line-height: 2;
+            color: #3d2b1a;
+            white-space: pre-line;
+        }
+
+        .scroll-parchment .poem-body p {
+            margin-bottom: 0.5rem;
+            text-indent: 0;
+        }
+
+        .scroll-parchment .poem-body .stanza {
+            margin-bottom: 1rem;
+        }
+
+        .scroll-parchment .scroll-end {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #8a7a6a;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #d4c4a0;
+        }
+
+        .scroll-parchment .scroll-end a {
+            color: #4a7a5a;
+            text-decoration: none;
+        }
+        .scroll-parchment .scroll-end a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) {
+            .scroll-parchment { padding: 2rem 1.5rem; }
+            .scroll-wrapper { padding: 2rem 1rem; }
+            .scroll-header { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-header">
+        <a href="reading-room.html">← Reading Room</a>
+        <h2>📜 Poetry Project</h2>
+        <a href="music.html">🎵 Listen to the Songs →</a>
+    </div>
+
+    <div class="scroll-wrapper">
+        <div class="scroll-parchment" id="scroll-content">
+            <div style="text-align:center;padding:4rem 0;color:#8a7a6a;">Unfurling the scroll...</div>
+        </div>
+    </div>
+
+    <script>
+        // ── Poetry Project Poems ──
+        // Each poem: { title, author, status, text }
+        const poems = [];
+
+        // Helper to load a poem from a collection file
+        async function loadPoem(id, title, author, status, extractFn) {
+            try {
+                const resp = await fetch(`books/${id}`);
+                const text = await resp.text();
+                const poemText = extractFn(text);
+                poems.push({ title, author, status, text: poemText || '(Poem text not found in collection)' });
+            } catch(e) {
+                poems.push({ title, author, status, text: '(Could not load poem)' });
+            }
+        }
+
+        // Extract functions for each poem
+        function extractTyger(text) {
+            const start = text.indexOf('THE TYGER');
+            if (start === -1) return null;
+            const end = text.indexOf('\n\n\n', start + 200);
+            return text.slice(start, end > start ? end : start + 800);
+        }
+
+        function extractBodyElectric(text) {
+            const start = text.indexOf('I Sing the Body Electric');
+            if (start === -1) return null;
+            const end = text.indexOf('\n\n\n\n', start + 500);
+            return text.slice(start, end > start ? end : start + 3000);
+        }
+
+        function extractRaven(text) {
+            const start = text.indexOf('THE RAVEN');
+            if (start === -1) return null;
+            const end = text.indexOf('\n\n\n', start + 2000);
+            return text.slice(start, end > start ? end : start + 2500);
+        }
+
+        function extractAnnabelLee(text) {
+            const start = text.indexOf('ANNABEL LEE');
+            if (start === -1) return null;
+            const end = text.indexOf('\n\n\n', start + 500);
+            return text.slice(start, end > start ? end : start + 1000);
+        }
+
+        function extractConvergence(text) {
+            const start = text.indexOf('Convergence of the Twain');
+            if (start === -1) return null;
+            const end = text.indexOf('\n\n\n', start + 300);
+            return text.slice(start, end > start ? end : start + 800);
+        }
+
+        function extractFireAndIce(text) {
+            const start = text.indexOf('Fire and Ice');
+            if (start === -1) return null;
+            const end = text.indexOf('\n', start + 100);
+            return text.slice(start, end > start ? end : start + 200);
+        }
+
+        function extractRailwayTrain(text) {
+            // Search for railway-related poems in Dickinson
+            const lines = text.split('\n');
+            let result = [];
+            let capturing = false;
+            let count = 0;
+            for (const line of lines) {
+                if (line.includes('railway') || line.includes('Railway') || line.includes('locomotive') || line.includes('Train')) {
+                    capturing = true;
+                    count = 0;
+                }
+                if (capturing) {
+                    result.push(line);
+                    count++;
+                    if (count > 30) break;
+                }
+            }
+            return result.join('\n') || null;
+        }
+
+        function extractNightBeforeChristmas(text) {
+            const start = text.indexOf('Twas the night');
+            if (start === -1) return null;
+            const end = text.indexOf('\n\n\n', start + 1000);
+            return text.slice(start, end > start ? end : start + 1500);
+        }
+
+        // ── Load all poems ──
+        async function loadAll() {
+            await Promise.all([
+                loadPoem('blake-songs.txt', 'The Tyger', 'William Blake', '✅ Complete — Song + Music Video', extractTyger),
+                loadPoem('whitman-leaves.txt', 'I Sing the Body Electric', 'Walt Whitman', '✅ Complete — Song', extractBodyElectric),
+                loadPoem('poe-poems.txt', 'The Raven', 'Edgar Allan Poe', '✅ Complete — Song + Music Video', extractRaven),
+                loadPoem('moore-christmas.txt', 'The Night Before Christmas', 'Clement Clarke Moore', '✅ Complete — Song + Music Video', extractNightBeforeChristmas),
+                loadPoem('poe-poems.txt', 'Annabel Lee', 'Edgar Allan Poe', '✅ Complete — Song', extractAnnabelLee),
+                loadPoem('hardy-poems.txt', 'The Convergence of the Twain', 'Thomas Hardy', '✅ Complete — Song', extractConvergence),
+                loadPoem('frost-poems.txt', 'Fire and Ice', 'Robert Frost', '✅ Complete — Song', extractFireAndIce),
+                loadPoem('dickinson-poems.txt', 'The Railway Train (The Iron Pulse)', 'Emily Dickinson', '✅ Complete — Song', extractRailwayTrain),
+            ]);
+
+            // In Progress poems
+            poems.push({
+                title: 'A Dream Within a Dream',
+                author: 'Edgar Allan Poe',
+                status: '🔄 In Progress — Lyric adaptation complete',
+                text: 'Take this kiss upon the brow!\nAnd, in parting from you now,\nThus much let me avow —\nYou are not wrong, who deem\nThat my days have been a dream;\nYet if hope has flown away\nIn a night, or in a day,\nIn a vision, or in none,\nIs it therefore the less gone?\nAll that we see or seem\nIs but a dream within a dream.\n\nI stand amid the roar\nOf a surf-tormented shore,\nAnd I hold within my hand\nGrains of the golden sand —\nHow few! yet how they creep\nThrough my fingers to the deep,\nWhile I weep — while I weep!\nO God! can I not grasp\nThem with a tighter clasp?\nO God! can I not save\nOne from the pitiless wave?\nIs all that we see or seem\nBut a dream within a dream?'
+            });
+
+            poems.push({
+                title: 'Hope is the thing with feathers',
+                author: 'Emily Dickinson',
+                status: '🔄 In Progress — Lyric adaptation complete',
+                text: '"Hope" is the thing with feathers —\nThat perches in the soul —\nAnd sings the tune without the words —\nAnd never stops — at all —\n\nAnd sweetest — in the Gale — is heard —\nAnd sore must be the storm —\nThat could abash the little Bird\nThat kept so many warm —\n\nI\'ve heard it in the chillest land —\nAnd on the strangest Sea —\nYet, never, in Extremity,\nIt asked a crumb — of me.'
+            });
+
+            poems.push({
+                title: 'If—',
+                author: 'Rudyard Kipling',
+                status: '🔄 In Progress — Lyric adaptation complete',
+                text: 'If you can keep your head when all about you\n    Are losing theirs and blaming it on you,\nIf you can trust yourself when all men doubt you,\n    But make allowance for their doubting too;\nIf you can wait and not be tired by waiting,\n    Or being lied about, don\'t deal in lies,\nOr being hated, don\'t give way to hating,\n    And yet don\'t look too good, nor talk too wise:\n\nIf you can dream — and not make dreams your master;\n    If you can think — and not make thoughts your aim;\nIf you can meet with Triumph and Disaster\n    And treat those two impostors just the same;\nIf you can bear to hear the truth you\'ve spoken\n    Twisted by knaves to make a trap for fools,\nOr watch the things you gave your life to, broken,\n    And stoop and build \'em up with worn-out tools:\n\nIf you can make one heap of all your winnings\n    And risk it on one turn of pitch-and-toss,\nAnd lose, and start again at your beginnings\n    And never breathe a word about your loss;\nIf you can force your heart and nerve and sinew\n    To serve your turn long after they are gone,\nAnd so hold on when there is nothing in you\n    Except the Will which says to them: "Hold on!"\n\nIf you can talk with crowds and keep your virtue,\n    Or walk with Kings — nor lose the common touch,\nIf neither foes nor loving friends can hurt you,\n    If all men count with you, but none too much;\nIf you can fill the unforgiving minute\n    With sixty seconds\' worth of distance run,\nYours is the Earth and everything that\'s in it,\n    And — which is more — you\'ll be a Man, my son!'
+            });
+
+            poems.push({
+                title: 'Invictus',
+                author: 'William Ernest Henley',
+                status: '🔄 In Progress — Lyric adaptation complete',
+                text: 'Out of the night that covers me,\n      Black as the pit from pole to pole,\nI thank whatever gods may be\n      For my unconquerable soul.\n\nIn the fell clutch of circumstance\n      I have not winced nor cried aloud.\nUnder the bludgeonings of chance\n      My head is bloody, but unbowed.\n\nBeyond this place of wrath and tears\n      Looms but the Horror of the shade,\nAnd yet the menace of the years\n      Finds and shall find me unafraid.\n\nIt matters not how strait the gate,\n      How charged with punishments the scroll,\nI am the master of my fate,\n      I am the captain of my soul.'
+            });
+
+            poems.push({
+                title: 'I Shall Not Care',
+                author: 'Sara Teasdale',
+                status: '🔄 In Progress — Lyric adaptation complete',
+                text: 'When I am dead and over me bright April\nShakes out her rain-drenched hair,\nThough you should lean above me broken-hearted,\nI shall not care.\n\nI shall have peace, as leafy trees are peaceful\nWhen rain bends down the bough,\nAnd I shall be more silent and cold-hearted\nThan you are now.'
+            });
+
+            poems.push({
+                title: 'O Captain! My Captain!',
+                author: 'Walt Whitman',
+                status: '🔄 In Progress — Lyric adaptation complete',
+                text: 'O Captain! my Captain! our fearful trip is done,\nThe ship has weather\'d every rack, the prize we sought is won,\nThe port is near, the bells I hear, the people all exulting,\nWhile follow eyes the steady keel, the vessel grim and daring;\nBut O heart! heart! heart!\n    O the bleeding drops of red,\n        Where on the deck my Captain lies,\n            Fallen cold and dead.\n\nO Captain! my Captain! rise up and hear the bells;\nRise up — for you the flag is flung — for you the bugle trills,\nFor you bouquets and ribbon\'d wreaths — for you the shores a-crowding,\nFor you they call, the swaying mass, their eager faces turning;\nHere Captain! dear father!\n    This arm beneath your head!\n        It is some dream that on the deck,\n            You\'ve fallen cold and dead.\n\nMy Captain does not answer, his lips are pale and still,\nMy father does not feel my arm, he has no pulse nor will,\nThe ship is anchor\'d safe and sound, its voyage closed and done,\nFrom fearful trip the victor ship comes in with object won;\nExult O shores, and ring O bells!\n    But I with mournful tread,\n        Walk the deck my Captain lies,\n            Fallen cold and dead.'
+            });
+
+            poems.push({
+                title: 'The Road Not Taken',
+                author: 'Robert Frost',
+                status: '🔄 In Progress — Lyric adaptation complete',
+                text: 'Two roads diverged in a yellow wood,\nAnd sorry I could not travel both\nAnd be one traveler, long I stood\nAnd looked down one as far as I could\nTo where it bent in the undergrowth;\n\nThen took the other, as just as fair,\nAnd having perhaps the better claim,\nBecause it was grassy and wanted wear;\nThough as for that the passing there\nHad worn them really about the same,\n\nAnd both that morning equally lay\nIn leaves no step had trodden black.\nOh, I kept the first for another day!\nYet knowing how way leads on to way,\nI doubted if I should ever come back.\n\nI shall be telling this with a sigh\nSomewhere ages and ages hence:\nTwo roads diverged in a wood, and I —\nI took the one less traveled by,\nAnd that has made all the difference.'
+            });
+
+            poems.push({
+                title: 'We Real Cool',
+                author: 'Gwendolyn Brooks',
+                status: '🔄 In Progress — Lyric adaptation complete',
+                text: 'THE POOL PLAYERS.\nSEVEN AT THE GOLDEN SHOVEL.\n\nWe real cool. We\nLeft school. We\n\nLurk late. We\nStrike straight. We\n\nSing sin. We\nThin gin. We\n\nJazz June. We\nDie soon.'
+            });
+
+            renderScroll();
+        }
+
+        function renderScroll() {
+            let html = `<h1>📜 Poetry Project</h1>
+                        <p class="scroll-subtitle">Poems from the public domain, chosen and adapted into songs by Frank. Music by Sherry, Eric, and Heather Crow.</p>
+                        <div class="scroll-divider" style="text-align:center;color:#c4a87a;font-size:1.5rem;margin:1.5rem 0;letter-spacing:8px;">✦ ✦ ✦</div>`;
+
+            for (const poem of poems) {
+                html += `<div class="poem">
+                            <div class="poem-title">${poem.title}</div>
+                            <div class="poem-author">${poem.author}</div>
+                            <div class="poem-status">${poem.status}</div>
+                            <div class="poem-body">`;
+
+                const lines = poem.text.split('\n');
+                let inStanza = false;
+                for (const line of lines) {
+                    if (line.trim() === '') {
+                        if (inStanza) {
+                            html += '</div>';
+                            inStanza = false;
+                        }
+                        continue;
+                    }
+                    if (!inStanza) {
+                        html += '<div class="stanza">';
+                        inStanza = true;
+                    }
+                    html += `<p>${line}</p>`;
+                }
+                if (inStanza) html += '</div>';
+
+                html += `</div></div>`;
+            }
+
+            html += `<div class="scroll-end">✦<br><br>
+                     <a href="music.html">🎵 Listen to the completed songs</a><br>
+                     <a href="reading-room.html">Return to the Reading Room</a>
+                     </div>`;
+
+            document.getElementById('scroll-content').innerHTML = html;
+        }
+
+        loadAll();
+    </script>
+</body>
+</html>
