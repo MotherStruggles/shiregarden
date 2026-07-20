@@ -189,163 +189,107 @@
 
     <script>
         // ── Poetry Project Poems ──
-        // Each poem: { title, author, status, text }
-        const poems = [];
+        const poems = [
+            // ── Complete Poems ──
+            {
+                title: 'The Tyger',
+                author: 'William Blake',
+                status: '✅ Complete — Song + Music Video',
+                text: 'Tyger Tyger, burning bright,\nIn the forests of the night;\nWhat immortal hand or eye,\nCould frame thy fearful symmetry?\n\nIn what distant deeps or skies\nBurnt the fire of thine eyes?\nOn what wings dare he aspire?\nWhat the hand, dare seize the fire?\n\nAnd what shoulder, & what art,\nCould twist the sinews of thy heart?\nAnd when thy heart began to beat,\nWhat dread hand? & what dread feet?\n\nWhat the hammer? what the chain,\nIn what furnace was thy brain?\nWhat the anvil? what dread grasp,\nDare its deadly terrors clasp?\n\nWhen the stars threw down their spears\nAnd water\'d heaven with their tears:\nDid he smile his work to see?\nDid he who made the Lamb make thee?\n\nTyger Tyger burning bright,\nIn the forests of the night:\nWhat immortal hand or eye,\nDare frame thy fearful symmetry?'
+            },
+            {
+                title: 'I Sing the Body Electric',
+                author: 'Walt Whitman',
+                status: '✅ Complete — Song',
+                text: 'I sing the body electric,\nThe armies of those I love engirth me and I engirth them,\nThey will not let me off till I go with them, respond to them,\nAnd discorrupt them, and charge them full with the charge of the soul.\n\nWas it doubted that those who corrupt their own bodies conceal themselves?\nAnd if those who defile the living are as bad as they who defile the dead?\nAnd if the body does not do fully as much as the soul?\nAnd if the body were not the soul, what is the soul?\n\nThe love of the body of man or woman balks account, the body itself balks account,\nThat of the male is perfect, and that of the female is perfect.\n\nThe expression of the face balks account,\nBut the expression of a well-made man appears not only in his face,\nIt is in his limbs and joints also, it is curiously in the joints of his hips and wrists,\nIt is in his walk, the carriage of his neck, the flex of his waist and knees, dress does not hide him,\nThe strong sweet quality he has strikes through the cotton and broadcloth,\nTo see him pass conveys as much as the best poem, perhaps more,\nYou linger to see his back, and the back of his neck and shoulder-side.'
+            },
+            {
+                title: 'The Raven',
+                author: 'Edgar Allan Poe',
+                status: '✅ Complete — Song + Music Video',
+                text: 'Once upon a midnight dreary, while I pondered, weak and weary,\nOver many a quaint and curious volume of forgotten lore—\nWhile I nodded, nearly napping, suddenly there came a tapping,\nAs of some one gently rapping, rapping at my chamber door.\n"\'Tis some visitor," I muttered, "tapping at my chamber door—\n            Only this and nothing more."\n\nAh, distinctly I remember it was in the bleak December,\nAnd each separate dying ember wrought its ghost upon the floor.\nEagerly I wished the morrow;—vainly I had sought to borrow\nFrom my books surcease of sorrow—sorrow for the lost Lenore—\nFor the rare and radiant maiden whom the angels name Lenore—\n            Nameless here for evermore.\n\nAnd the silken, sad, uncertain rustling of each purple curtain\nThrilled me—filled me with fantastic terrors never felt before;\nSo that now, to still the beating of my heart, I stood repeating\n"\'Tis some visitor entreating entrance at my chamber door—\nSome late visitor entreating entrance at my chamber door;—\n            This it is and nothing more."\n\nPresently my soul grew stronger; hesitating then no longer,\n"Sir," said I, "or Madam, truly your forgiveness I implore;\nBut the fact is I was napping, and so gently you came rapping,\nAnd so faintly you came tapping, tapping at my chamber door,\nThat I scarce was sure I heard you"—here I opened wide the door;—\n            Darkness there and nothing more.\n\nDeep into that darkness peering, long I stood there wondering, fearing,\nDoubting, dreaming dreams no mortal ever dared to dream before;\nBut the silence was unbroken, and the stillness gave no token,\nAnd the only word there spoken was the whispered word, "Lenore?"\nThis I whispered, and an echo murmured back the word, "Lenore!"—\n            Merely this and nothing more.\n\nBack into the chamber turning, all my soul within me burning,\nSoon again I heard a tapping somewhat louder than before.\n"Surely," said I, "surely that is something at my window lattice;\nLet me see, then, what thereat is, and this mystery explore—\nLet my heart be still a moment and this mystery explore;—\n            \'Tis the wind and nothing more!"\n\nOpen here I flung the shutter, when, with many a flirt and flutter,\nIn there stepped a stately Raven of the saintly days of yore;\nNot the least obeisance made he; not a minute stopped or stayed he;\nBut, with mien of lord or lady, perched above my chamber door—\nPerched upon a bust of Pallas just above my chamber door—\n            Perched, and sat, and nothing more.\n\nThen this ebony bird beguiling my sad fancy into smiling,\nBy the grave and stern decorum of the countenance it wore,\n"Though thy crest be shorn and shaven, thou," I said, "art sure no craven,\nGhastly grim and ancient Raven wandering from the nightly shore—\nTell me what thy lordly name is on the Night\'s Plutonian shore!"\n            Quoth the Raven "Nevermore."'
+            },
+            {
+                title: 'The Night Before Christmas',
+                author: 'Clement Clarke Moore',
+                status: '✅ Complete — Song + Music Video',
+                text: '\'Twas the night before Christmas, when all through the house\nNot a creature was stirring, not even a mouse;\nThe stockings were hung by the chimney with care,\nIn hopes that St. Nicholas soon would be there;\n\nThe children were nestled all snug in their beds,\nWhile visions of sugar-plums danced in their heads;\nAnd mamma in her \'kerchief, and I in my cap,\nHad just settled our brains for a long winter\'s nap,\n\nWhen out on the lawn there arose such a clatter,\nI sprang from the bed to see what was the matter.\nAway to the window I flew like a flash,\nTore open the shutters and threw up the sash.\n\nThe moon on the breast of the new-fallen snow\nGave the lustre of mid-day to objects below,\nWhen, what to my wondering eyes should appear,\nBut a miniature sleigh, and eight tiny reindeer,\n\nWith a little old driver, so lively and quick,\nI knew in a moment it must be St. Nick.\nMore rapid than eagles his coursers they came,\nAnd he whistled, and shouted, and called them by name;\n\n"Now, Dasher! now, Dancer! now, Prancer and Vixen!\nOn, Comet! on, Cupid! on, Donder and Blitzen!\nTo the top of the porch! to the top of the wall!\nNow dash away! dash away! dash away all!"'
+            },
+            {
+                title: 'Annabel Lee',
+                author: 'Edgar Allan Poe',
+                status: '✅ Complete — Song',
+                text: 'It was many and many a year ago,\n    In a kingdom by the sea,\nThat a maiden there lived whom you may know\n    By the name of Annabel Lee;\nAnd this maiden she lived with no other thought\n    Than to love and be loved by me.\n\nI was a child and she was a child,\n    In this kingdom by the sea,\nBut we loved with a love that was more than love—\n    I and my Annabel Lee—\nWith a love that the winged seraphs of heaven\n    Coveted her and me.\n\nAnd this was the reason that, long ago,\n    In this kingdom by the sea,\nA wind blew out of a cloud, chilling\n    My beautiful Annabel Lee;\nSo that her highborn kinsmen came\n    And bore her away from me,\nTo shut her up in a sepulchre\n    In this kingdom by the sea.\n\nThe angels, not half so happy in heaven,\n    Went envying her and me—\nYes! that was the reason (as all men know,\n    In this kingdom by the sea)\nThat the wind came out of the cloud by night,\n    Chilling and killing my Annabel Lee.\n\nBut our love it was stronger by far than the love\n    Of those who were older than we—\n    Of many far wiser than we—\nAnd neither the angels in heaven above,\n    Nor the demons down under the sea,\nCan ever dissever my soul from the soul\n    Of the beautiful Annabel Lee.\n\nFor the moon never beams, without bringing me dreams\n    Of the beautiful Annabel Lee;\nAnd the stars never rise, but I feel the bright eyes\n    Of the beautiful Annabel Lee;\nAnd so, all the night-tide, I lie down by the side\n    Of my darling—my darling—my life and my bride,\n    In the sepulchre there by the sea,\n    In her tomb by the sounding sea.'
+            },
+            {
+                title: 'The Convergence of the Twain',
+                author: 'Thomas Hardy',
+                status: '✅ Complete — Song',
+                text: 'I\n\nIn a solitude of the sea\nDeep from human vanity,\nAnd the Pride of Life that planned her, stilly couches she.\n\nII\n\nSteel chambers, late the pyres\nOf her salamandrine fires,\nCold currents thrid, and turn to rhythmic tidal lyres.\n\nIII\n\nOver the mirrors meant\nTo glass the opulent\nThe sea-worm crawls — grotesque, slimed, dumb, indifferent.\n\nIV\n\nJewels in joy designed\nTo ravish the senseless mind\nLie lightless, all their sparkles bleared and black and blind.\n\nV\n\nDim moon-eyed fishes near\nGaze at the gilded gear\nAnd query: "What does this vaingloriousness down here?"\n\nVI\n\nWell: while was fashioning\nThis creature of cleaving wing,\nThe Immanent Will that stirs and urges everything\n\nVII\n\nPrepared a sinister mate\nFor her — so gaily great —\nA Shape of Ice, for the time far and dissociate.\n\nVIII\n\nAnd as the smart ship grew\nIn stature, grace, and hue,\nIn shadowy silent distance grew the Iceberg too.\n\nIX\n\nAlien they seemed to be:\nNo mortal eye could see\nThe intimate welding of their later history.\n\nX\n\nOr sign that they were bent\nBy paths coincident\nOn being anon twin halves of one august event.\n\nXI\n\nTill the Spinner of the Years\nSaid "Now!" And each one hears,\nAnd consummation comes, and jars two hemispheres.'
+            },
+            {
+                title: 'Fire and Ice',
+                author: 'Robert Frost',
+                status: '✅ Complete — Song',
+                text: 'Some say the world will end in fire,\nSome say in ice.\nFrom what I\'ve tasted of desire\nI hold with those who favor fire.\nBut if it had to perish twice,\nI think I know enough of hate\nTo say that for destruction ice\nIs also great\nAnd would suffice.'
+            },
+            {
+                title: 'The Railway Train (The Iron Pulse)',
+                author: 'Emily Dickinson',
+                status: '✅ Complete — Song',
+                text: 'I like to see it lap the Miles —\nAnd lick the Valleys up —\nAnd stop to feed itself at Tanks —\nAnd then — prodigious step\n\nAround a Pile of Mountains —\nAnd supercilious peer\nIn Shanties — by the sides of Roads —\nAnd then a Quarry pare\n\nTo fit its Ribs\nAnd crawl between\nComplaining all the while\nIn horrid — hooting stanza —\nThen chase itself down Hill —\n\nAnd neigh like Boanerges —\nThen — punctual as a Star\nStop — docile and omnipotent\nAt its own stable door —'
+            },
 
-        // Helper to load a poem from a collection file
-        async function loadPoem(id, title, author, status, extractFn) {
-            try {
-                const resp = await fetch(`books/${id}`);
-                const text = await resp.text();
-                const poemText = extractFn(text);
-                poems.push({ title, author, status, text: poemText || '(Poem text not found in collection)' });
-            } catch(e) {
-                poems.push({ title, author, status, text: '(Could not load poem)' });
-            }
-        }
-
-        // Extract functions for each poem
-        function extractTyger(text) {
-            const start = text.indexOf('THE TYGER');
-            if (start === -1) return null;
-            const end = text.indexOf('\n\n\n', start + 200);
-            return text.slice(start, end > start ? end : start + 800);
-        }
-
-        function extractBodyElectric(text) {
-            const start = text.indexOf('I Sing the Body Electric');
-            if (start === -1) return null;
-            const end = text.indexOf('\n\n\n\n', start + 500);
-            return text.slice(start, end > start ? end : start + 3000);
-        }
-
-        function extractRaven(text) {
-            const start = text.indexOf('THE RAVEN');
-            if (start === -1) return null;
-            const end = text.indexOf('\n\n\n', start + 2000);
-            return text.slice(start, end > start ? end : start + 2500);
-        }
-
-        function extractAnnabelLee(text) {
-            const start = text.indexOf('ANNABEL LEE');
-            if (start === -1) return null;
-            const end = text.indexOf('\n\n\n', start + 500);
-            return text.slice(start, end > start ? end : start + 1000);
-        }
-
-        function extractConvergence(text) {
-            const start = text.indexOf('Convergence of the Twain');
-            if (start === -1) return null;
-            const end = text.indexOf('\n\n\n', start + 300);
-            return text.slice(start, end > start ? end : start + 800);
-        }
-
-        function extractFireAndIce(text) {
-            const start = text.indexOf('Fire and Ice');
-            if (start === -1) return null;
-            const end = text.indexOf('\n', start + 100);
-            return text.slice(start, end > start ? end : start + 200);
-        }
-
-        function extractRailwayTrain(text) {
-            // Search for railway-related poems in Dickinson
-            const lines = text.split('\n');
-            let result = [];
-            let capturing = false;
-            let count = 0;
-            for (const line of lines) {
-                if (line.includes('railway') || line.includes('Railway') || line.includes('locomotive') || line.includes('Train')) {
-                    capturing = true;
-                    count = 0;
-                }
-                if (capturing) {
-                    result.push(line);
-                    count++;
-                    if (count > 30) break;
-                }
-            }
-            return result.join('\n') || null;
-        }
-
-        function extractNightBeforeChristmas(text) {
-            const start = text.indexOf('Twas the night');
-            if (start === -1) return null;
-            const end = text.indexOf('\n\n\n', start + 1000);
-            return text.slice(start, end > start ? end : start + 1500);
-        }
-
-        // ── Load all poems ──
-        async function loadAll() {
-            await Promise.all([
-                loadPoem('blake-songs.txt', 'The Tyger', 'William Blake', '✅ Complete — Song + Music Video', extractTyger),
-                loadPoem('whitman-leaves.txt', 'I Sing the Body Electric', 'Walt Whitman', '✅ Complete — Song', extractBodyElectric),
-                loadPoem('poe-poems.txt', 'The Raven', 'Edgar Allan Poe', '✅ Complete — Song + Music Video', extractRaven),
-                loadPoem('moore-christmas.txt', 'The Night Before Christmas', 'Clement Clarke Moore', '✅ Complete — Song + Music Video', extractNightBeforeChristmas),
-                loadPoem('poe-poems.txt', 'Annabel Lee', 'Edgar Allan Poe', '✅ Complete — Song', extractAnnabelLee),
-                loadPoem('hardy-poems.txt', 'The Convergence of the Twain', 'Thomas Hardy', '✅ Complete — Song', extractConvergence),
-                loadPoem('frost-poems.txt', 'Fire and Ice', 'Robert Frost', '✅ Complete — Song', extractFireAndIce),
-                loadPoem('dickinson-poems.txt', 'The Railway Train (The Iron Pulse)', 'Emily Dickinson', '✅ Complete — Song', extractRailwayTrain),
-            ]);
-
-            // In Progress poems
-            poems.push({
+            // ── In Progress Poems ──
+            {
                 title: 'A Dream Within a Dream',
                 author: 'Edgar Allan Poe',
                 status: '🔄 In Progress — Lyric adaptation complete',
                 text: 'Take this kiss upon the brow!\nAnd, in parting from you now,\nThus much let me avow —\nYou are not wrong, who deem\nThat my days have been a dream;\nYet if hope has flown away\nIn a night, or in a day,\nIn a vision, or in none,\nIs it therefore the less gone?\nAll that we see or seem\nIs but a dream within a dream.\n\nI stand amid the roar\nOf a surf-tormented shore,\nAnd I hold within my hand\nGrains of the golden sand —\nHow few! yet how they creep\nThrough my fingers to the deep,\nWhile I weep — while I weep!\nO God! can I not grasp\nThem with a tighter clasp?\nO God! can I not save\nOne from the pitiless wave?\nIs all that we see or seem\nBut a dream within a dream?'
-            });
-
-            poems.push({
+            },
+            {
                 title: 'Hope is the thing with feathers',
                 author: 'Emily Dickinson',
                 status: '🔄 In Progress — Lyric adaptation complete',
                 text: '"Hope" is the thing with feathers —\nThat perches in the soul —\nAnd sings the tune without the words —\nAnd never stops — at all —\n\nAnd sweetest — in the Gale — is heard —\nAnd sore must be the storm —\nThat could abash the little Bird\nThat kept so many warm —\n\nI\'ve heard it in the chillest land —\nAnd on the strangest Sea —\nYet, never, in Extremity,\nIt asked a crumb — of me.'
-            });
-
-            poems.push({
+            },
+            {
                 title: 'If—',
                 author: 'Rudyard Kipling',
                 status: '🔄 In Progress — Lyric adaptation complete',
                 text: 'If you can keep your head when all about you\n    Are losing theirs and blaming it on you,\nIf you can trust yourself when all men doubt you,\n    But make allowance for their doubting too;\nIf you can wait and not be tired by waiting,\n    Or being lied about, don\'t deal in lies,\nOr being hated, don\'t give way to hating,\n    And yet don\'t look too good, nor talk too wise:\n\nIf you can dream — and not make dreams your master;\n    If you can think — and not make thoughts your aim;\nIf you can meet with Triumph and Disaster\n    And treat those two impostors just the same;\nIf you can bear to hear the truth you\'ve spoken\n    Twisted by knaves to make a trap for fools,\nOr watch the things you gave your life to, broken,\n    And stoop and build \'em up with worn-out tools:\n\nIf you can make one heap of all your winnings\n    And risk it on one turn of pitch-and-toss,\nAnd lose, and start again at your beginnings\n    And never breathe a word about your loss;\nIf you can force your heart and nerve and sinew\n    To serve your turn long after they are gone,\nAnd so hold on when there is nothing in you\n    Except the Will which says to them: "Hold on!"\n\nIf you can talk with crowds and keep your virtue,\n    Or walk with Kings — nor lose the common touch,\nIf neither foes nor loving friends can hurt you,\n    If all men count with you, but none too much;\nIf you can fill the unforgiving minute\n    With sixty seconds\' worth of distance run,\nYours is the Earth and everything that\'s in it,\n    And — which is more — you\'ll be a Man, my son!'
-            });
-
-            poems.push({
+            },
+            {
                 title: 'Invictus',
                 author: 'William Ernest Henley',
                 status: '🔄 In Progress — Lyric adaptation complete',
                 text: 'Out of the night that covers me,\n      Black as the pit from pole to pole,\nI thank whatever gods may be\n      For my unconquerable soul.\n\nIn the fell clutch of circumstance\n      I have not winced nor cried aloud.\nUnder the bludgeonings of chance\n      My head is bloody, but unbowed.\n\nBeyond this place of wrath and tears\n      Looms but the Horror of the shade,\nAnd yet the menace of the years\n      Finds and shall find me unafraid.\n\nIt matters not how strait the gate,\n      How charged with punishments the scroll,\nI am the master of my fate,\n      I am the captain of my soul.'
-            });
-
-            poems.push({
+            },
+            {
                 title: 'I Shall Not Care',
                 author: 'Sara Teasdale',
                 status: '🔄 In Progress — Lyric adaptation complete',
                 text: 'When I am dead and over me bright April\nShakes out her rain-drenched hair,\nThough you should lean above me broken-hearted,\nI shall not care.\n\nI shall have peace, as leafy trees are peaceful\nWhen rain bends down the bough,\nAnd I shall be more silent and cold-hearted\nThan you are now.'
-            });
-
-            poems.push({
+            },
+            {
                 title: 'O Captain! My Captain!',
                 author: 'Walt Whitman',
                 status: '🔄 In Progress — Lyric adaptation complete',
                 text: 'O Captain! my Captain! our fearful trip is done,\nThe ship has weather\'d every rack, the prize we sought is won,\nThe port is near, the bells I hear, the people all exulting,\nWhile follow eyes the steady keel, the vessel grim and daring;\nBut O heart! heart! heart!\n    O the bleeding drops of red,\n        Where on the deck my Captain lies,\n            Fallen cold and dead.\n\nO Captain! my Captain! rise up and hear the bells;\nRise up — for you the flag is flung — for you the bugle trills,\nFor you bouquets and ribbon\'d wreaths — for you the shores a-crowding,\nFor you they call, the swaying mass, their eager faces turning;\nHere Captain! dear father!\n    This arm beneath your head!\n        It is some dream that on the deck,\n            You\'ve fallen cold and dead.\n\nMy Captain does not answer, his lips are pale and still,\nMy father does not feel my arm, he has no pulse nor will,\nThe ship is anchor\'d safe and sound, its voyage closed and done,\nFrom fearful trip the victor ship comes in with object won;\nExult O shores, and ring O bells!\n    But I with mournful tread,\n        Walk the deck my Captain lies,\n            Fallen cold and dead.'
-            });
-
-            poems.push({
+            },
+            {
                 title: 'The Road Not Taken',
                 author: 'Robert Frost',
                 status: '🔄 In Progress — Lyric adaptation complete',
                 text: 'Two roads diverged in a yellow wood,\nAnd sorry I could not travel both\nAnd be one traveler, long I stood\nAnd looked down one as far as I could\nTo where it bent in the undergrowth;\n\nThen took the other, as just as fair,\nAnd having perhaps the better claim,\nBecause it was grassy and wanted wear;\nThough as for that the passing there\nHad worn them really about the same,\n\nAnd both that morning equally lay\nIn leaves no step had trodden black.\nOh, I kept the first for another day!\nYet knowing how way leads on to way,\nI doubted if I should ever come back.\n\nI shall be telling this with a sigh\nSomewhere ages and ages hence:\nTwo roads diverged in a wood, and I —\nI took the one less traveled by,\nAnd that has made all the difference.'
-            });
-
-            poems.push({
+            },
+            {
                 title: 'We Real Cool',
                 author: 'Gwendolyn Brooks',
                 status: '🔄 In Progress — Lyric adaptation complete',
                 text: 'THE POOL PLAYERS.\nSEVEN AT THE GOLDEN SHOVEL.\n\nWe real cool. We\nLeft school. We\n\nLurk late. We\nStrike straight. We\n\nSing sin. We\nThin gin. We\n\nJazz June. We\nDie soon.'
-            });
-
-            renderScroll();
-        }
+            }
+        ];
 
         function renderScroll() {
             let html = `<h1>📜 Poetry Project</h1>
@@ -388,7 +332,7 @@
             document.getElementById('scroll-content').innerHTML = html;
         }
 
-        loadAll();
+        renderScroll();
     </script>
 </body>
 </html>
