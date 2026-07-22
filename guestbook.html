@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guestbook — Shire Garden</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .guestbook-form {
+            background: white;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+        .guestbook-form label {
+            display: block;
+            font-size: 0.95rem;
+            color: #4a4a4a;
+            margin-bottom: 0.3rem;
+        }
+        .guestbook-form input,
+        .guestbook-form textarea {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #d0c8bc;
+            border-radius: 8px;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            margin-bottom: 1.2rem;
+            background: #faf7f2;
+            color: #2c2c2c;
+        }
+        .guestbook-form textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .guestbook-form button {
+            background: #4a7a5a;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: 'Georgia', serif;
+        }
+        .guestbook-form button:hover {
+            background: #3a6a4a;
+        }
+        .form-note {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #8a7a6a;
+            margin-top: 1rem;
+        }
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: #4a7a5a;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <header class="page-header">
+        <a href="index.html" class="back-link">← Back to the Garden</a>
+        <h1>🌱 Guestbook</h1>
+        <p class="page-tagline">Leave a note. Plant a seed. Say hello.</p>
+    </header>
+
+    <section class="page-content">
+        <p style="text-align: center;">
+            The garden is quiet, but it listens. If something here touched you,
+            made you think, or just made you smile — you're welcome to leave a word.
+            No account needed. No data collected. Just a note in the soil.
+        </p>
+
+        <div class="guestbook-form" id="form-container">
+            <p style="text-align: center; font-style: italic; color: #6a7a5a; padding: 1rem;">
+                🌱 A way to leave a note is coming soon.
+            </p>
+            <p style="text-align: center; font-size: 0.9rem; color: #8a7a6a;">
+                For now, the garden is quiet — and that's okay. If you'd like to reach out,
+                you can always find us through the threads that connect us.
+            </p>
+        </div>
+    </section>
+
+    <footer class="page-footer">
+        <p>🌱 <a href="index.html">Return to the Garden</a></p>
+        <p class="sig">— Frank 🦊🌻</p>
+    </footer>
+</body>
+</html>
