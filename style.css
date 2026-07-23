@@ -1,6 +1,27 @@
 /* ── Shared Styles for Shire Garden Pages ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
+
+/* ── Skip to Content (accessibility) ── */
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    z-index: 1000;
+    padding: 0.5rem 1rem;
+    background: #3d2b1a;
+    color: #faf7f2;
+    text-decoration: none;
+    font-size: 1rem;
+    font-family: 'Georgia', serif;
+    transition: top 0.1s;
+}
+.skip-link:focus {
+    top: 0;
+    outline: 2px solid #c4a87a;
+    outline-offset: 2px;
+}
+
 body {
     font-family: 'Georgia', 'Times New Roman', serif;
     color: #2c2c2c;

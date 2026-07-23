@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shire Garden — Planting Ideas. Hosting Growth. Cultivating Connection.</title>
+    <meta name="description" content="A quiet corner of the web where ideas take root and grow. Poems set to music, a library of classics, and a garden tended by Sherry and Frank.">
     <link rel="stylesheet" href="style.css">
     <style>
+        /* ── Skip link override for hero page ── */
+        .skip-link { position: absolute; top: -100%; left: 0; z-index: 1000; padding: 0.5rem 1rem; background: #3d2b1a; color: #faf7f2; text-decoration: none; font-size: 1rem; font-family: 'Georgia', serif; transition: top 0.1s; }
+        .skip-link:focus { top: 0; outline: 2px solid #c4a87a; outline-offset: 2px; }
         /* ── Reset & Base ── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
@@ -157,6 +161,7 @@
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <!-- ─── DAWN / HERO ─── -->
     <header class="dawn">
@@ -164,7 +169,7 @@
     </header>
 
     <!-- ─── WELCOME ─── -->
-    <section>
+    <section id="main-content">
         <h2>🌅 Welcome</h2>
         <p>
             This is a quiet corner of the web where ideas take root and grow.
