@@ -32,7 +32,7 @@
                 rgba(184, 168, 154, 0.15) 75%,
                 rgba(138, 154, 138, 0.2) 100%
             ),
-            url('hero-image.png') center/cover no-repeat;
+            url('hero-image.webp') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -41,6 +41,22 @@
             padding: 2rem;
             position: relative;
             overflow: hidden;
+        }
+
+        /* Mobile: use smaller hero image */
+        @media (max-width: 700px) {
+            .dawn {
+                background: linear-gradient(180deg,
+                    rgba(252, 228, 184, 0.3) 0%,
+                    rgba(248, 213, 163, 0.2) 15%,
+                    rgba(245, 196, 138, 0.15) 30%,
+                    rgba(232, 176, 122, 0.1) 45%,
+                    rgba(212, 160, 122, 0.1) 60%,
+                    rgba(184, 168, 154, 0.15) 75%,
+                    rgba(138, 154, 138, 0.2) 100%
+                ),
+                url('hero-image-mobile.webp') center/cover no-repeat;
+            }
         }
 
         .dawn .scroll-hint {
