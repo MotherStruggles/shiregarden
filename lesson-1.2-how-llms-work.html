@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 1.2 — Down the Rabbit Hole: How LLMs Actually Work</title>
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      color: #2c1810;
+      background: #f5efe6;
+      line-height: 1.7;
+    }
+    /* ── Wonderland Decor ── */
+    .header {
+      background: linear-gradient(135deg, #1a3c34 0%, #2d5a4b 40%, #4a7c6f 100%);
+      color: #f5efe6;
+      padding: 3rem 1.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 6px solid #c9a96e;
+    }
+    .header::before {
+      content: '🐰 🎩 🐱 🫖 ♠️';
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.4rem;
+      letter-spacing: 1.2rem;
+      opacity: 0.25;
+    }
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.5px;
+    }
+    .header .subtitle {
+      font-size: 1.05rem;
+      opacity: 0.85;
+      font-style: italic;
+      max-width: 600px;
+      margin: 0.4rem auto 0;
+    }
+    .header .badge {
+      display: inline-block;
+      background: #c9a96e;
+      color: #1a3c34;
+      padding: 0.25rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 0.6rem;
+    }
+    /* ── Container ── */
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+    /* ── Cards ── */
+    .card {
+      background: #fffcf8;
+      border-radius: 14px;
+      padding: 1.5rem 1.8rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 12px rgba(44,24,16,0.08);
+      border-left: 4px solid #c9a96e;
+    }
+    .card h2 {
+      color: #1a3c34;
+      font-size: 1.35rem;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .card h3 {
+      color: #2d5a4b;
+      font-size: 1.1rem;
+      margin: 1rem 0 0.4rem;
+    }
+    .card p, .card li {
+      color: #3d2b1e;
+    }
+    .card ul, .card ol {
+      padding-left: 1.3rem;
+      margin: 0.5rem 0;
+    }
+    .card li { margin-bottom: 0.3rem; }
+
+    /* ── Video Embed ── */
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      margin-bottom: 1rem;
+    }
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ── Objectives ── */
+    .obj-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin: 0.8rem 0;
+    }
+    .obj-item {
+      background: #edf5f1;
+      padding: 0.7rem 1rem;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .obj-item .icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+
+    /* ── Accordion Sections ── */
+    .accordion { margin: 0.5rem 0; }
+    .accordion-item {
+      border: 1px solid #ddd6cc;
+      border-radius: 10px;
+      margin-bottom: 0.6rem;
+      overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .accordion-item:hover { box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
+    .accordion-item.completed {
+      border-left: 5px solid #5a9e7a;
+    }
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.9rem 1rem;
+      cursor: pointer;
+      background: #fffcf8;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .accordion-header:hover { background: #f8f3ec; }
+    .accordion-header .check {
+      width: 22px; height: 22px;
+      border: 2px solid #bbb;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.8rem;
+      background: white;
+      transition: 0.15s;
+      cursor: pointer;
+    }
+    .accordion-header .check.done {
+      background: #5a9e7a;
+      border-color: #5a9e7a;
+      color: white;
+    }
+    .accordion-header .section-num {
+      background: #c9a96e;
+      color: white;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .accordion-header .section-title {
+      flex: 1;
+      font-weight: 600;
+      color: #2c1810;
+    }
+    .accordion-header .arrow {
+      transition: transform 0.2s;
+      color: #999;
+      font-size: 1.1rem;
+    }
+    .accordion-header.open .arrow { transform: rotate(180deg); }
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0 1rem;
+      background: #faf7f2;
+    }
+    .accordion-body.open {
+      max-height: 2000px;
+      padding: 0.8rem 1rem 1.2rem;
+    }
+    .accordion-body p, .accordion-body li { font-size: 0.95rem; }
+    .accordion-body .time-tag {
+      display: inline-block;
+      background: #e8e0d6;
+      padding: 0.15rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-family: 'Courier New', monospace;
+      color: #5a4a3a;
+    }
+    .accordion-body .checkpoint {
+      background: #edf5f1;
+      border-radius: 8px;
+      padding: 0.7rem 1rem;
+      margin: 0.6rem 0;
+      font-style: italic;
+      border-left: 3px solid #5a9e7a;
+    }
+    .accordion-body .code-hint {
+      background: #2c1810;
+      color: #e8e0d6;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      display: inline-block;
+      margin: 0.3rem 0;
+    }
+
+    /* ── Progress Bar ── */
+    .progress-wrap {
+      margin: 1.2rem 0 1.5rem;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: #6b5a4a;
+      margin-bottom: 0.3rem;
+    }
+    .progress-bar {
+      height: 10px;
+      background: #ddd6cc;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #5a9e7a, #7ab89a);
+      border-radius: 10px;
+      transition: width 0.5s ease;
+    }
+
+    /* ── Quiz ── */
+    .quiz-question {
+      margin: 0.8rem 0;
+    }
+    .quiz-question p { font-weight: 600; margin-bottom: 0.4rem; }
+    .quiz-option {
+      display: block;
+      padding: 0.5rem 0.8rem;
+      margin: 0.25rem 0;
+      background: #f5efe6;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.15s;
+      border: 1px solid transparent;
+      font-size: 0.92rem;
+    }
+    .quiz-option:hover { background: #ede4d8; }
+    .quiz-option.selected { border-color: #1a3c34; background: #e0ece6; }
+    .quiz-option.correct { border-color: #5a9e7a; background: #d4ede0; }
+    .quiz-option.wrong { border-color: #c0392b; background: #fce8e5; }
+    .quiz-feedback {
+      margin-top: 0.5rem;
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.correct { background: #d4ede0; border-left: 3px solid #5a9e7a; }
+    .quiz-feedback.wrong { background: #fce8e5; border-left: 3px solid #c0392b; }
+    .quiz-btn {
+      background: #1a3c34;
+      color: white;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.15s;
+      font-family: inherit;
+      margin-top: 0.4rem;
+    }
+    .quiz-btn:hover { background: #2d5a4b; }
+
+    /* ── Vocabulary Flip ── */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.6rem;
+      margin: 0.8rem 0;
+    }
+    .vocab-card {
+      background: #fffcf8;
+      border: 1px solid #ddd6cc;
+      border-radius: 10px;
+      padding: 0.7rem 0.9rem;
+      cursor: pointer;
+      transition: 0.2s;
+      min-height: 60px;
+    }
+    .vocab-card:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+    .vocab-card .term {
+      font-weight: 700;
+      color: #1a3c34;
+    }
+    .vocab-card .def {
+      display: none;
+      margin-top: 0.3rem;
+      font-size: 0.88rem;
+      color: #3d2b1e;
+      border-top: 1px dashed #ddd6cc;
+      padding-top: 0.3rem;
+    }
+    .vocab-card.show .def { display: block; }
+    .vocab-card .hint { font-size: 0.78rem; color: #999; font-style: italic; margin-top: 0.2rem; }
+
+    /* ── Discussion ── */
+    .discuss-card {
+      background: linear-gradient(135deg, #f8f3ec, #f0eae0);
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+      margin: 0.8rem 0;
+      border-left: 4px solid #c9a96e;
+    }
+    .discuss-card h3 { margin-top: 0; }
+
+    /* ── Reflection ── */
+    .reflection-area {
+      width: 100%;
+      min-height: 100px;
+      padding: 0.8rem;
+      border: 1px solid #ddd6cc;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      background: #fffcf8;
+      resize: vertical;
+      margin: 0.5rem 0;
+      color: #2c1810;
+    }
+    .reflection-area:focus { outline: 2px solid #c9a96e; border-color: transparent; }
+    .reflection-save {
+      background: #c9a96e;
+      color: #1a3c34;
+      border: none;
+      padding: 0.4rem 1.2rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+    }
+    .reflection-save:hover { background: #b8944f; }
+    .reflection-status {
+      font-size: 0.8rem;
+      color: #999;
+      margin-left: 0.6rem;
+      display: none;
+    }
+    .reflection-status.show { display: inline; }
+
+    /* ── Meta ── */
+    .meta-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: #6b5a4a;
+      margin: 0.5rem 0;
+    }
+    .meta-info span {
+      background: #e8e0d6;
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+    }
+
+    /* ── CTA ── */
+    .cta-box {
+      background: linear-gradient(135deg, #1a3c34, #2d5a4b);
+      color: #f5efe6;
+      border-radius: 14px;
+      padding: 1.8rem 2rem;
+      text-align: center;
+      margin: 1.5rem 0;
+    }
+    .cta-box h2 { color: #c9a96e; font-size: 1.4rem; }
+    .cta-box p { margin-top: 0.5rem; opacity: 0.9; }
+    .cta-box .next-link {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #c9a96e;
+      color: #1a3c34;
+      text-decoration: none;
+      padding: 0.6rem 1.5rem;
+      border-radius: 30px;
+      font-weight: 700;
+      transition: 0.15s;
+    }
+    .cta-box .next-link:hover { background: #dbb87a; transform: translateY(-1px); }
+
+    /* ── Footer ── */
+    .footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.8rem;
+      color: #8a7a6a;
+      border-top: 1px solid #ddd6cc;
+      margin-top: 2rem;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .header h1 { font-size: 1.6rem; }
+      .obj-grid { grid-template-columns: 1fr; }
+      .vocab-grid { grid-template-columns: 1fr 1fr; }
+      .card { padding: 1rem 1.2rem; }
+      .meta-info { gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header class="header">
+  <h1>🐇 Down the Rabbit Hole</h1>
+  <p class="subtitle">How Large Language Models Actually Work — A Guided Tour</p>
+  <div class="badge">📺 Video Lesson  •  51 min  •  Module 1</div>
+</header>
+
+<div class="container">
+
+  <!-- ═══════════ VIDEO ═══════════ -->
+  <div class="card">
+    <h2>🎬 The Video</h2>
+    <p style="margin-bottom:0.5rem;"><em>"I Built an LLM From Scratch"</em> — CJ Reynolds (Syntax)</p>
+    <div class="video-wrapper" onclick="window.open('https://www.youtube.com/watch?v=YmLp8qe87A0','_blank')" style="cursor:pointer; position:relative;">
+      <img src="https://i.ytimg.com/vi/YmLp8qe87A0/hqdefault.jpg"
+           alt="I Built an LLM From Scratch - YouTube thumbnail"
+           style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; border-radius:12px;">
+      <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+                  background:rgba(0,0,0,0.7); color:white; width:72px; height:72px;
+                  border-radius:50%; display:flex; align-items:center; justify-content:center;
+                  font-size:2rem; border:4px solid rgba(255,255,255,0.9);">
+        ▶
+      </div>
+      <div style="position:absolute; bottom:10px; left:10px; background:rgba(0,0,0,0.8);
+                  color:white; padding:0.2rem 0.6rem; border-radius:4px; font-size:0.85rem;
+                  font-family:'Courier New',monospace;">
+        51:47
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:0.5rem;">
+      <a href="https://www.youtube.com/watch?v=YmLp8qe87A0" target="_blank"
+         style="display:inline-block; background:#1a3c34; color:white; text-decoration:none;
+                padding:0.6rem 1.5rem; border-radius:30px; font-weight:600;
+                transition:background 0.15s;"
+         onmouseover="this.style.background='#2d5a4b'"
+         onmouseout="this.style.background='#1a3c34'">
+        📺 Watch on YouTube
+      </a>
+    </div>
+    <div class="meta-info">
+      <span>⏱️ 51 min 48 sec</span>
+      <span>📂 Companion app: <a href="https://github.com/w3cj/how-llms-work" target="_blank" style="color:#1a3c34;">w3cj/how-llms-work</a></span>
+      <span>🏷️ #machinelearning #typescript #webdeveloper</span>
+    </div>
+  </div>
+
+  <!-- ═══════════ OBJECTIVES ═══════════ -->
+  <div class="card">
+    <h2>🎯 Learning Objectives</h2>
+    <p style="font-size:0.92rem; color:#5a4a3a; margin-bottom:0.5rem;">By the end of this lesson, you will be able to:</p>
+    <div class="obj-grid">
+      <div class="obj-item"><span class="icon">🧩</span> Distinguish pattern-matching "AI" from actual neural networks</div>
+      <div class="obj-item"><span class="icon">📊</span> Explain backpropagation and why depth matters</div>
+      <div class="obj-item"><span class="icon">🔤</span> Describe how tokenization turns text into numbers</div>
+      <div class="obj-item"><span class="icon">🌐</span> Understand what word embeddings capture semantically</div>
+      <div class="obj-item"><span class="icon">🏗️</span> Identify the key components of a transformer (attention, layers, normalization)</div>
+      <div class="obj-item"><span class="icon">💡</span> Appreciate that LLMs are built from simple, learnable operations — not magic</div>
+    </div>
+  </div>
+
+  <!-- ═══════════ PROGRESS ═══════════ -->
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>🐛 Your progress</span>
+      <span id="progress-text">0 / 5 sections</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ VIEWING GUIDE (ACCORDION) ═══════════ -->
+  <div class="card">
+    <h2>📖 Guided Viewing</h2>
+    <p style="font-size:0.92rem; margin-bottom:0.6rem;">Watch each section, then check it off. Click a header to expand notes and checkpoints.</p>
+
+    <div class="accordion">
+
+      <!-- ── Section 1 ── -->
+      <div class="accordion-item" data-section="1">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="check" onclick="event.stopPropagation(); toggleCheck(this)">✓</span>
+          <span class="section-num">1</span>
+          <span class="section-title">Simple Chat — Pattern Matching</span>
+          <span class="arrow">▾</span>
+        </div>
+        <div class="accordion-body">
+          <p><span class="time-tag">⏱ ~5 min</span></p>
+          <p>CJ builds an ELIZA-style chatbot using if-statements and pattern matching. It streams responses word-by-word via Server-Sent Events — the same streaming plumbing real LLMs use, but with zero intelligence behind it.</p>
+          <div class="checkpoint">
+            <strong>🔍 Watch for:</strong> How does the "fake AI" compare to a real LLM? Notice that the <em>streaming infrastructure</em> is identical — the illusion of intelligence starts long before the intelligence itself.
+          </div>
+          <p><strong>💬 Key insight:</strong> "Same plumbing as ChatGPT, zero intelligence." This sets the baseline — without neural networks, there's no learning, only hardcoded rules.</p>
+        </div>
+      </div>
+
+      <!-- ── Section 2 ── -->
+      <div class="accordion-item" data-section="2">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="check" onclick="event.stopPropagation(); toggleCheck(this)">✓</span>
+          <span class="section-num">2</span>
+          <span class="section-title">XOR Neural Net — Backpropagation</span>
+          <span class="arrow">▾</span>
+        </div>
+        <div class="accordion-body">
+          <p><span class="time-tag">⏱ ~10 min</span></p>
+          <p>A single-layer perceptron fails on XOR (proving Minsky & Papert's 1969 result). A multi-layer network succeeds via backpropagation — the same algorithm every neural network uses today, from image classifiers to LLMs.</p>
+          <div class="checkpoint">
+            <strong>🔍 Watch for:</strong> The live training visualization. Watch the decision boundary shift as the network learns. Notice <em>why</em> a single layer can't solve XOR — this is why depth matters.
+          </div>
+          <p><strong>💬 Key insight:</strong> Backpropagation is how every neural network learns. The math is just the chain rule from calculus — propagating errors backward through the layers so each neuron can adjust.</p>
+        </div>
+      </div>
+
+      <!-- ── Section 3 ── -->
+      <div class="accordion-item" data-section="3">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="check" onclick="event.stopPropagation(); toggleCheck(this)">✓</span>
+          <span class="section-num">3</span>
+          <span class="section-title">Basic Tokenizer — BPE From Scratch</span>
+          <span class="arrow">▾</span>
+        </div>
+        <div class="accordion-body">
+          <p><span class="time-tag">⏱ ~10 min</span></p>
+          <p>Byte Pair Encoding (BPE) from scratch. CJ trains a tokenizer on whatever text you input — watch merge steps animate as the algorithm builds a vocabulary from individual characters up to common words and subwords.</p>
+          <div class="checkpoint">
+            <strong>🔍 Watch for:</strong> The animated merge visualization. See how "low" + "er" → "lower" as the algorithm learns common subword patterns. This is how your typed text becomes token IDs.
+          </div>
+          <p><strong>💬 Key insight:</strong> Every word gets broken into subword tokens. "ChatGPT" might become ["Chat", "G", "PT"]. Tokenization is the bridge between human language and neural network math.</p>
+        </div>
+      </div>
+
+      <!-- ── Section 4 ── -->
+      <div class="accordion-item" data-section="4">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="check" onclick="event.stopPropagation(); toggleCheck(this)">✓</span>
+          <span class="section-num">4</span>
+          <span class="section-title">Train Embeddings — Word2Vec Skip-Gram</span>
+          <span class="arrow">▾</span>
+        </div>
+        <div class="accordion-body">
+          <p><span class="time-tag">⏱ ~10 min</span></p>
+          <p>Trains word embeddings from scratch using Word2Vec skip-gram with negative sampling. Watch vectors learn that words used in similar contexts cluster together in vector space.</p>
+          <div class="checkpoint">
+            <strong>🔍 Watch for:</strong> The vector space visualization — words moving into clusters by meaning. "King" - "Man" + "Woman" ≈ "Queen" is the classic result that shows embeddings capture <em>relationships</em>, not just definitions.
+          </div>
+          <p><strong>💬 Key insight:</strong> "You shall know a word by the company it keeps." Words that appear in similar contexts get similar vector representations. This is how LLMs build understanding of meaning without being explicitly taught definitions.</p>
+        </div>
+      </div>
+
+      <!-- ── Section 5 ── -->
+      <div class="accordion-item" data-section="5">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <span class="check" onclick="event.stopPropagation(); toggleCheck(this)">✓</span>
+          <span class="section-num">5</span>
+          <span class="section-title">Train Transformer — GPT From Scratch</span>
+          <span class="arrow">▾</span>
+        </div>
+        <div class="accordion-body">
+          <p><span class="time-tag">⏱ ~15 min</span></p>
+          <p>A decoder-only transformer built entirely from scratch — no ML libraries. Every operation hand-implemented: multi-head causal self-attention, layer normalization, feed-forward layers, backpropagation, and Adam optimization. Uses multi-threaded data parallelism via SharedArrayBuffer for training speed.</p>
+          <div class="checkpoint">
+            <strong>🔍 Watch for:</strong> The attention mechanism visualization — see how each token "looks at" every previous token to decide which context matters. The multi-head attention lets the model attend to different kinds of relationships simultaneously.
+          </div>
+          <p><strong>💬 Key insight:</strong> The transformer is just matrix multiplications + softmax + layer norm. There's no single "intelligence switch" — the magic is emergent from thousands of simple operations at massive scale.</p>
+          <p><strong>📚 References from the codebase:</strong> Vaswani et al. "Attention Is All You Need" (2017), Radford et al. "GPT-1" (2018), Holtzman et al. "The Curious Case of Neural Text Degeneration" (2019).</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════ VOCABULARY ═══════════ -->
+  <div class="card">
+    <h2>📚 Key Vocabulary <span style="font-size:0.7rem; background:#c9a96e; color:#1a3c34; padding:0.15rem 0.6rem; border-radius:20px; font-weight:600; vertical-align:middle;">30 terms</span></h2>
+    <p style="font-size:0.9rem; margin-bottom:0.5rem;">Tap or click a term to reveal its plain-language definition. Terms are grouped by course module.</p>
+
+    <!-- Module 1: Foundations -->
+    <h3 style="color:#1a3c34; font-size:1rem; margin: 1rem 0 0.4rem 0; border-bottom:2px solid #c9a96e; padding-bottom:0.2rem;">🐇 Module 1 — How LLMs Work</h3>
+    <div class="vocab-grid" id="vocab-grid">
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">LLM (Large Language Model)</span>
+        <div class="def">A type of AI trained on massive amounts of text to predict and generate human-like language. GPT, Claude, Gemini — they're all LLMs.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Tokens</span>
+        <div class="def">The basic units an LLM reads and writes. A word like "hello" might be one token; a longer or unusual word might be split into several. Think of them as the model's alphabet.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Tokenization</span>
+        <div class="def">The process of breaking text into tokens. BPE (Byte Pair Encoding) is the most common algorithm — it starts with individual characters and merges frequent pairs into larger tokens.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Context Window</span>
+        <div class="def">The maximum amount of text (in tokens) an LLM can "see" at once when generating a response. Think of it as the model's working memory — beyond this, it forgets.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Embeddings</span>
+        <div class="def">Dense vectors (lists of numbers) that represent the meaning of words or tokens. Words used in similar contexts end up with similar vectors — "king" and "queen" are closer than "king" and "toaster".</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Transformer</span>
+        <div class="def">The neural network architecture (Vaswani et al., 2017) that powers all modern LLMs. Built from stacked attention and feed-forward layers — the "T" in GPT and "T" in BERT.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Attention (Self-Attention)</span>
+        <div class="def">The mechanism that lets each token "look at" every other token in the context to decide which parts matter most. When the model reads "the cat sat on the ___", attention helps it focus on "cat" and "sat" to predict "mat".</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Backpropagation</span>
+        <div class="def">The algorithm that trains neural networks by computing errors backward from the output through every layer, adjusting each connection to reduce mistakes next time. Same algorithm from XOR nets to GPT-5.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Inference</span>
+        <div class="def">When a trained model is actually used — you give it input, it runs a forward pass through the network, and produces output. Training is the practice; inference is the performance.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Logit / Softmax</span>
+        <div class="def">Logits are the raw scores the model assigns to every possible next token before picking one. Softmax turns those scores into probabilities (0–100%) that sum to 1, so the model can make a weighted choice.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+    </div>
+
+    <!-- Module 2: Prompting & Interaction -->
+    <h3 style="color:#1a3c34; font-size:1rem; margin: 1.2rem 0 0.4rem 0; border-bottom:2px solid #c9a96e; padding-bottom:0.2rem;">🎩 Module 2 — Prompting & Interaction</h3>
+    <div class="vocab-grid">
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Prompt Engineering</span>
+        <div class="def">The craft of designing input text to get the best possible output from an LLM. Like asking a good question — specific, structured, and with the right context — rather than a vague one.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">System Prompt</span>
+        <div class="def">An invisible instruction that sets the model's behaviour, role, and constraints before the conversation starts. Like giving an actor their character notes before they step on stage.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Chain-of-Thought (CoT)</span>
+        <div class="def">A prompting technique that asks the model to show its reasoning step by step before answering. Like a maths teacher saying "show your working" — it dramatically improves accuracy on complex problems.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Zero-shot Learning</span>
+        <div class="def">Asking an LLM to perform a task with no examples — just a description. "Translate this to French:" without showing any translations first. Surprisingly effective with modern models.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Few-shot Learning</span>
+        <div class="def">Giving the model 2–5 examples of what you want before asking it to do the task. "Here are three haikus. Now write one about a cat." — the examples teach the pattern.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Temperature</span>
+        <div class="def">A dial that controls randomness. Low temperature (0.1) = the model picks the most likely word every time (factual, repeatable). High temperature (1.5) = more surprises (creative, varied).</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Top-p / Top-k Sampling</span>
+        <div class="def">Two knobs that narrow which tokens the model can choose from. Top-k only considers the k most likely next words; Top-p considers tokens until their combined probability reaches p%. Both reduce weird outputs.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Hallucinations</span>
+        <div class="def">When an LLM confidently states something that isn't true. The model isn't lying — it's just predicting the most plausible-sounding next word. A bit like the Mad Hatter: charming, but don't trust his directions.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+    </div>
+
+    <!-- Module 3: Advanced Techniques -->
+    <h3 style="color:#1a3c34; font-size:1rem; margin: 1.2rem 0 0.4rem 0; border-bottom:2px solid #c9a96e; padding-bottom:0.2rem;">🫖 Module 3 — Customising & Enhancing</h3>
+    <div class="vocab-grid">
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Fine-tuning</span>
+        <div class="def">Taking a pre-trained LLM and training it further on a smaller, specific dataset. Like sending a general doctor to specialise in cardiology — the base knowledge is there, you're sharpening one skill.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">PEFT (Parameter-Efficient Fine-Tuning)</span>
+        <div class="def">A family of techniques that fine-tune a model by adjusting only a tiny fraction of its parameters, keeping most of the original model frozen. Much cheaper and faster than full fine-tuning.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">LoRA (Low-Rank Adaptation)</span>
+        <div class="def">The most popular PEFT method. Instead of retraining the giant model, it trains small "adapter" matrices that plug into the existing layers. Imagine adding training wheels rather than rebuilding the bike.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">RAG (Retrieval-Augmented Generation)</span>
+        <div class="def">A technique that lets an LLM look up information from a knowledge base before answering. Instead of guessing, the model searches for relevant documents first — like a student allowed to open their textbook during the exam.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Alignment</span>
+        <div class="def">Training an LLM to behave in ways that are helpful, honest, and harmless. A raw model can predict toxic text just as well as kind text — alignment steers it toward the good stuff.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">RLHF (Reinforcement Learning from Human Feedback)</span>
+        <div class="def">The main alignment technique: humans rate model outputs, and those ratings train a reward model that fine-tunes the LLM. Like teaching a dog by saying "good boy!" — the model learns what humans prefer.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Safety / Guardrails</span>
+        <div class="def">Rules and filters that prevent an LLM from generating harmful, biased, or unsafe content. Think of them as the Queen of Hearts' guards — they stop the model from yelling "Off with their heads!" at the wrong moment.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Quantization</span>
+        <div class="def">A compression technique that shrinks an LLM by using fewer bits to store each number (e.g. 16-bit → 4-bit). Makes models smaller and faster to run, at a small cost to quality. How you get a 70B model running on a laptop.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+    </div>
+
+    <!-- Module 4: Ecosystem & Future -->
+    <h3 style="color:#1a3c34; font-size:1rem; margin: 1.2rem 0 0.4rem 0; border-bottom:2px solid #c9a96e; padding-bottom:0.2rem;">♠️ Module 4 — Ecosystem & Future</h3>
+    <div class="vocab-grid">
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Agent</span>
+        <div class="def">An LLM that can use tools, make decisions, and take actions on its own — searching the web, writing files, controlling apps. Like giving Alice a map and letting her explore Wonderland instead of just describing it.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Multimodal</span>
+        <div class="def">An LLM that can understand and generate multiple types of data — text, images, audio, video. GPT-4 with vision and DALL·E built in is multimodal; text-only ChatGPT is not.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">API (Application Programming Interface)</span>
+        <div class="def">The way developers send requests to an LLM from their own code. Instead of typing in a chat box, software calls the API — which is how apps like Grammarly or Notion AI get their smarts.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Open Source LLMs</span>
+        <div class="def">Models whose weights are publicly released — anyone can download, inspect, modify, and run them locally (e.g. Llama, Mistral, DeepSeek). Like a recipe book you can change.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Proprietary LLMs</span>
+        <div class="def">Models owned by companies that keep the internals secret — you access them only through an API or app (e.g. GPT-4, Claude, Gemini). Like a restaurant meal: delicious, but you can't see the recipe.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Latency</span>
+        <div class="def">The time it takes for an LLM to start responding after you hit Enter. Lower latency = feels snappy and conversational. Higher latency = you wait, wondering if something broke.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">Throughput</span>
+        <div class="def">How many tokens an LLM can generate per second. High throughput means the model can serve many users at once or generate long documents quickly.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+      <div class="vocab-card" onclick="toggleVocab(this)">
+        <span class="term">AGI (Artificial General Intelligence)</span>
+        <div class="def">A hypothetical future AI that can learn and perform any intellectual task a human can — not just language, but reasoning, planning, creativity, and adapting to novel situations. The white rabbit we're all chasing.</div>
+        <div class="hint">🔤 tap to reveal</div>
+      </div>
+    </div>
+
+    <p style="margin-top:1rem; text-align:right; font-size:0.85rem;">
+      📖 <a href="course-glossary.html" style="color:#1a3c34; font-weight:600;">View full course glossary →</a>
+    </p>
+  </div>
+
+  <!-- ═══════════ QUIZ ═══════════ -->
+  <div class="card">
+    <h2>🧪 Quick Comprehension Check</h2>
+    <p style="font-size:0.9rem; margin-bottom:0.5rem;">Test your understanding after watching. No grades — just for you.</p>
+
+    <div class="quiz-question" id="q1">
+      <p>1. What makes the ELIZA-style chatbot in Section 1 different from a real LLM?</p>
+      <label class="quiz-option" onclick="selectQuiz('q1',this)">
+        <input type="radio" name="q1" style="display:none;"> It doesn't stream responses word by word
+      </label>
+      <label class="quiz-option" onclick="selectQuiz('q1',this)">
+        <input type="radio" name="q1" style="display:none;"> It uses if-statements and pattern matching instead of a learned neural network
+      </label>
+      <label class="quiz-option" onclick="selectQuiz('q1',this)">
+        <input type="radio" name="q1" style="display:none;"> It doesn't have a user interface
+      </label>
+      <label class="quiz-option" onclick="selectQuiz('q1',this)">
+        <input type="radio" name="q1" style="display:none;"> It runs on different hardware
+      </label>
+      <div class="quiz-feedback" id="q1-fb"></div>
+      <button class="quiz-btn" onclick="checkQuiz('q1',1)">Check Answer</button>
+    </div>
+
+    <div class="quiz-question" id="q2">
+      <p>2. Why does a single-layer perceptron fail on XOR?</p>
+      <label class="quiz-option" onclick="selectQuiz('q2',this)">
+        <input type="radio" name="q2" style="display:none;"> XOR is too computationally expensive
+        </label>
+      <label class="quiz-option" onclick="selectQuiz('q2',this)">
+        <input type="radio" name="q2" style="display:none;"> A single layer can only learn linearly separable patterns
+      </label>
+      <label class="quiz-option" onclick="selectQuiz('q2',this)">
+        <input type="radio" name="q2" style="display:none;"> The training data was corrupted
+      </label>
+      <label class="quiz-option" onclick="selectQuiz('q2',this)">
+        <input type="radio" name="q2" style="display:none;"> Backpropagation doesn't work with single layers
+      </label>
+      <div class="quiz-feedback" id="q2-fb"></div>
+      <button class="quiz-btn" onclick="checkQuiz('q2',1)">Check Answer</button>
+    </div>
+
+    <div class="quiz-question" id="q3">
+      <p>3. What are word embeddings?</p>
+      <label class="quiz-option" onclick="selectQuiz('q3',this)">
+        <input type="radio" name="q3" style="display:none;"> A dictionary that maps words to their definitions
+      </label>
+      <label class="quiz-option" onclick="selectQuiz('q3',this)">
+        <input type="radio" name="q3" style="display:none;"> Dense vectors that encode word meanings so similar words cluster together
+      </label>
+      <label class="quiz-option" onclick="selectQuiz('q3',this)">
+        <input type="radio" name="q3" style="display:none;"> A compression algorithm for text files
+      </label>
+      <label class="quiz-option" onclick="selectQuiz('q3',this)">
+        <input type="radio" name="q3" style="display:none;"> The output probabilities of a language model
+      </label>
+      <div class="quiz-feedback" id="q3-fb"></div>
+      <button class="quiz-btn" onclick="checkQuiz('q3',1)">Check Answer</button>
+    </div>
+
+    <div class="quiz-question" id="q4">
+      <p>4. Which paper introduced the Transformer architecture?</p>
+      <label class="quiz-option" onclick="selectQuiz('q4',this)">
+        <input type="radio" name="q4" style="display:none;"> "Language Models are Unsupervised Multitask Learners" (2019)
+      </label>
+      <label class="quiz-option" onclick="selectQuiz('q4',this)">
+        <input type="radio" name="q4" style="display:none;"> "Attention Is All You Need" (2017)
+      </label>
+      <label class="quiz-option" onclick="selectQuiz('q4',this)">
+        <input type="radio" name="q4" style="display:none;"> "BERT: Pre-training of Deep Bidirectional Transformers" (2018)
+      </label>
+      <label class="quiz-option" onclick="selectQuiz('q4',this)">
+        <input type="radio" name="q4" style="display:none;"> "ImageNet Classification with Deep Convolutional Networks" (2012)
+      </label>
+      <div class="quiz-feedback" id="q4-fb"></div>
+      <button class="quiz-btn" onclick="checkQuiz('q4',1)">Check Answer</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ DISCUSSION ═══════════ -->
+  <div class="card">
+    <h2>💬 Discussion Prompts</h2>
+    <p style="font-size:0.9rem; margin-bottom:0.5rem;">Pick one to reflect on, then bring your thoughts to the group.</p>
+
+    <div class="discuss-card">
+      <h3>🫖 The "Magic" Question</h3>
+      <p>After seeing the ELIZA chatbot (if-statements pretending to be intelligent), do you think real LLMs are also "just pattern matching" at a larger scale, or is there a qualitative difference? Where's the line between mimicry and understanding?</p>
+    </div>
+
+    <div class="discuss-card">
+      <h3>🌳 From Acorns to Oak Trees</h3>
+      <p>The XOR neural net uses the same algorithm (backpropagation) as GPT-5. What does it mean that intelligence at every scale — from classifying two inputs to writing poetry — relies on the same simple learning rule? Does that democratize AI or make it more mysterious?</p>
+    </div>
+
+    <div class="discuss-card">
+      <h3>🔤 Alice's Token Tea Party</h3>
+      <p>CJ's tokenizer demonstrates that "ChatGPT" gets broken into subword pieces. How does tokenization affect what an LLM can and cannot understand? Why might a model struggle with unusual names, invented words, or code?</p>
+    </div>
+
+    <div class="discuss-card">
+      <h3>🎩 The Mad Hatter's Architecture</h3>
+      <p>The transformer is built from simple parts: attention, feed-forward layers, normalization. If these are all well-understood mathematical operations, why can't we predict what a trained model will do? What's the difference between understanding the parts and understanding the whole?</p>
+    </div>
+  </div>
+
+  <!-- ═══════════ REFLECTION JOURNAL ═══════════ -->
+  <div class="card">
+    <h2>📓 Reflection Journal</h2>
+    <p style="font-size:0.9rem; margin-bottom:0.3rem;">Write your thoughts. They're saved in your browser (local storage).</p>
+    <textarea class="reflection-area" id="reflection-journal" placeholder="What surprised you most about how LLMs work? What felt like magic before that now makes more sense? Is there anything that still feels mysterious after watching?"></textarea>
+    <div>
+      <button class="reflection-save" onclick="saveReflection()">💾 Save Notes</button>
+      <span class="reflection-status" id="reflection-status">✓ Saved</span>
+    </div>
+  </div>
+
+  <!-- ═══════════ NEXT STEPS ═══════════ -->
+  <div class="cta-box">
+    <h2>🍵 Next Stop: The Prompt Workshop</h2>
+    <p>Now that you understand how an LLM processes language — tokens → embeddings → attention → prediction — you're ready to learn how to <em>talk</em> to them effectively. Prompting is the craft of giving the model the right context, structure, and constraints for your task.</p>
+    <a class="next-link" href="#">→ Continue to Lesson 1.3: The Art of the Prompt</a>
+  </div>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <div class="footer">
+    🐰 Wonderland AI Literacy Course &bull; Module 1: Foundations<br>
+    Built with 🫖 by Alice & the Wonderland Team &bull; Video by <a href="https://www.youtube.com/@syntaxfm" target="_blank" style="color:#1a3c34;">Syntax (CJ Reynolds)</a>
+  </div>
+
+</div>
+
+<!-- ═══════════ JAVASCRIPT ═══════════ -->
+<script>
+  /* ── Accordion Toggle ── */
+  function toggleAccordion(header) {
+    const body = header.nextElementSibling;
+    const open = body.classList.toggle('open');
+    header.classList.toggle('open', open);
+  }
+
+  /* ── Checkbox Toggle ── */
+  function toggleCheck(el) {
+    el.classList.toggle('done');
+    el.textContent = el.classList.contains('done') ? '✓' : '✓';
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const done = document.querySelectorAll('.check.done').length;
+    const total = document.querySelectorAll('.accordion-item').length;
+    const pct = Math.round((done / total) * 100);
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent = `${done} / ${total} sections`;
+
+    // Mark accordion items as completed visually
+    document.querySelectorAll('.accordion-item').forEach((item, i) => {
+      const check = item.querySelector('.check');
+      item.classList.toggle('completed', check && check.classList.contains('done'));
+    });
+  }
+
+  /* ── Vocabulary Toggle ── */
+  function toggleVocab(el) {
+    el.classList.toggle('show');
+  }
+
+  /* ── Quiz ── */
+  const quizAnswers = { 'q1': 1, 'q2': 1, 'q3': 1, 'q4': 1 };
+
+  function selectQuiz(qId, el) {
+    const parent = document.getElementById(qId);
+    parent.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+
+  function checkQuiz(qId, correctIdx) {
+    const parent = document.getElementById(qId);
+    const selected = parent.querySelector('.quiz-option.selected');
+    const fb = document.getElementById(qId + '-fb');
+
+    if (!selected) {
+      fb.textContent = '🐛 Pick an answer first!';
+      fb.className = 'quiz-feedback wrong show';
+      return;
+    }
+
+    const options = parent.querySelectorAll('.quiz-option');
+    const idx = Array.from(options).indexOf(selected);
+    const isCorrect = (idx === correctIdx);
+
+    // Reset
+    options.forEach((o, i) => {
+      o.classList.remove('correct', 'wrong');
+      if (i === correctIdx) o.classList.add('correct');
+      if (o.classList.contains('selected') && !isCorrect) o.classList.add('wrong');
+    });
+
+    fb.textContent = isCorrect
+      ? '✓ Correct! Well spotted.'
+      : '✗ Not quite — give it another think. The correct answer is highlighted in green.';
+    fb.className = `quiz-feedback show ${isCorrect ? 'correct' : 'wrong'}`;
+  }
+
+  /* ── Reflection Journal (localStorage) ── */
+  const journal = document.getElementById('reflection-journal');
+  const savedJournal = localStorage.getItem('wonderland-reflection-1.2');
+  if (savedJournal) journal.value = savedJournal;
+
+  function saveReflection() {
+    localStorage.setItem('wonderland-reflection-1.2', journal.value);
+    const status = document.getElementById('reflection-status');
+    status.classList.add('show');
+    setTimeout(() => status.classList.remove('show'), 2000);
+  }
+
+  /* ── Auto-save on input ── */
+  journal.addEventListener('input', () => {
+    localStorage.setItem('wonderland-reflection-1.2', journal.value);
+  });
+
+  /* ── Init progress ── */
+  updateProgress();
+
+  /* ── Expand first accordion on load as hint ── */
+  const firstHeader = document.querySelector('.accordion-header');
+  if (firstHeader) toggleAccordion(firstHeader);
+</script>
+
+</body>
+</html>
